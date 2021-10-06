@@ -51,10 +51,10 @@ public class GrappleScript : MonoBehaviour
             float distFromPoint = Vector3.Distance(player.position, grapplePoint);
 
             joint.maxDistance = distFromPoint * 0.8f;
-            joint.minDistance = distFromPoint * 0.2f;
+            joint.minDistance = distFromPoint * 0.7f;
 
             joint.spring = 4.5f;
-            joint.damper = 7f;
+            joint.damper = 2f;
             joint.massScale = 4.5f;
 
         }
@@ -62,6 +62,8 @@ public class GrappleScript : MonoBehaviour
 
     void DrawRope()
     {
+        if (!joint) return;
+
         lineR.positionCount = 2;
         lineR.SetPosition(0, gunTip.position);
         lineR.SetPosition(1, grapplePoint);

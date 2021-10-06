@@ -35,15 +35,19 @@ public class AustinMovementTest : MonoBehaviour
         float xMove = Input.GetAxis("Horizontal");
         float zMove = Input.GetAxis("Vertical");
 
+        
+
+
         if(xMove != 0 || zMove != 0)
         {
-            playerRB.AddForce(xMove * 50, 0, zMove * 50);
+           
+            Vector3 moveDir = new Vector3(xMove, 0, zMove);
 
-            //playerBody.transform.forward = transform.eulerAngles;
-            //playerBody.transform.position += new Vector3(xMove, 0, zMove);
+            Vector3 dirTwo = moveDir - transform.forward;
+
+            playerRB.AddForce(dirTwo * 2);
+
         }
-
-        //Vector3 move = transform.right * xMove + transform.forward * zMove;
 
 
 
