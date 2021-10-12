@@ -190,6 +190,7 @@ public class PlayerMovement : MonoBehaviour
     }
     bool isJumping = false;
 
+    /*
     /// <summary>
     /// Crouches or uncrouches the player.
     /// </summary>
@@ -240,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Sets the player move speed of the player
         crouchForce = speed;
-    }
+    }*/
     #endregion
 
     #region Calculations
@@ -282,8 +283,8 @@ public class PlayerMovement : MonoBehaviour
         // Movement in air
         if (!isGrounded)
         {
-            multiplier = .25f;
-            multiplierZ = .25f;
+            multiplier = 1;
+            multiplierZ = 1;
         }
 
         // Provides less movement when in the air and sliding
@@ -299,23 +300,43 @@ public class PlayerMovement : MonoBehaviour
         Vector2 mag = FindVelRelativeToLook();
         float xMag = mag.x, yMag = mag.y;
 
-        //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
+        if(currentMove.x == 0 || currentMove.z == 0)
+        {
+            //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
             if (currentMove.x > 0 && xMag > currentMaxVelocity) currentMove.x = 0;
             if (currentMove.x < 0 && xMag < -currentMaxVelocity) currentMove.x = 0;
 
             if (currentMove.z > 0 && yMag > currentMaxVelocity) currentMove.z = 0;
             if (currentMove.z < 0 && yMag < -currentMaxVelocity) currentMove.z = 0;
+        }
+        else if (!isGrounded)
+        {
+            //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
+            if (currentMove.x > 0 && xMag > currentMaxVelocity*.5f) currentMove.x = 0;
+            if (currentMove.x < 0 && xMag < -currentMaxVelocity*.5f) currentMove.x = 0;
 
-        //rb.AddForce(currentMove * currentForce, ForceMode.Acceleration);
+            if (currentMove.z > 0 && yMag > currentMaxVelocity*.5f) currentMove.z = 0;
+            if (currentMove.z < 0 && yMag < -currentMaxVelocity*.5f) currentMove.z = 0;
+        }
+        else
+        {
+            if (rb.velocity.magnitude > currentMaxVelocity || rb.velocity.magnitude < -currentMaxVelocity)
+            {
+                if (currentMove.x > 0 && xMag > currentMaxVelocity/2) currentMove.x = 0;
+                if (currentMove.x < 0 && xMag < -currentMaxVelocity/2) currentMove.x = 0;
+
+                if (currentMove.z > 0 && yMag > currentMaxVelocity/2) currentMove.z = 0;
+                if (currentMove.z < 0 && yMag < -currentMaxVelocity/2) currentMove.z = 0;
+            }
+        }
 
         //Apply forces to move player
-        rb.AddForce(cameraTransform.transform.forward * currentMove.z * currentForce * multiplier * multiplierZ);
-        rb.AddForce(cameraTransform.transform.right * currentMove.x * currentForce * multiplier);
-
-        if (!isGrounded)
-        {
-            //ClampVelocity();
-        }
+        Vector3 forward = cameraTransform.forward;
+        forward.y = 0;
+        Vector3 right = cameraTransform.right;
+        right.y = 0;
+        rb.AddForce(forward * currentMove.z * currentForce * multiplier * multiplierZ);
+        rb.AddForce(right * currentMove.x * currentForce * multiplier);
     }
 
     private float threshold = 0.01f;
@@ -332,20 +353,25 @@ public class PlayerMovement : MonoBehaviour
         //Counter movement
         if (Math.Abs(mag.x) > threshold && Math.Abs(x) < 0.05f || (mag.x < -threshold && x > 0) || (mag.x > threshold && x < 0))
         {
-            rb.AddForce(walkForce * cameraTransform.right * -mag.x * counterMovement);
+            Vector3 right = cameraTransform.right;
+            right.y = 0;
+            rb.AddForce(walkForce * right * -mag.x * counterMovement);
         }
         if (Math.Abs(mag.y) > threshold && Math.Abs(y) < 0.05f || (mag.y < -threshold && y > 0) || (mag.y > threshold && y < 0))
         {
-            rb.AddForce(walkForce * cameraTransform.forward * -mag.y * counterMovement);
+            Vector3 forward = cameraTransform.forward;
+            forward.y = 0;
+            rb.AddForce(walkForce * forward * -mag.y * counterMovement);
         }
 
+        /*
         //Limit diagonal running. This will also cause a full stop if sliding fast and un-crouching, so not optimal.
         if (Mathf.Sqrt((Mathf.Pow(rb.velocity.x, 2) + Mathf.Pow(rb.velocity.z, 2))) > currentMaxVelocity)
         {
             float fallspeed = rb.velocity.y;
             Vector3 n = rb.velocity.normalized * currentMaxVelocity;
             rb.velocity = new Vector3(n.x, fallspeed, n.z);
-        }
+        }*/
     }
 
     /// <summary>
@@ -361,26 +387,13 @@ public class PlayerMovement : MonoBehaviour
         float u = Mathf.DeltaAngle(lookAngle, moveAngle);
         float v = 90 - u;
 
-        float magnitue = rb.velocity.magnitude;
+        Vector3 velocity = rb.velocity;
+        velocity.y = 0;
+        float magnitue = velocity.magnitude;
         float yMag = magnitue * Mathf.Cos(u * Mathf.Deg2Rad);
         float xMag = magnitue * Mathf.Cos(v * Mathf.Deg2Rad);
 
         return new Vector2(xMag, yMag);
-    }
-
-    /// <summary>
-    /// Clamps the velocity to a provided maximum.
-    /// </summary>
-    private void ClampVelocity()
-    {
-        Vector3 velocity = rb.velocity;
-        velocity.y = 0;
-
-        velocity = Vector3.ClampMagnitude(velocity, currentMaxVelocity);
-
-        velocity.y = rb.velocity.y;
-
-        rb.velocity = velocity;
     }
     #endregion
     #endregion

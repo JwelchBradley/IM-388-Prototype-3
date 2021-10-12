@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnCrouch()
     {
-        pm.Crouch();
+        //pm.Crouch();
     }
     #endregion
     #endregion
