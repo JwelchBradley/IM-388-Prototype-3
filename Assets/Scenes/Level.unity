@@ -8850,6 +8850,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1119962704054421393, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_VerticalAxis.m_MaxValue
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1119962704054421393, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_VerticalAxis.m_MinValue
+      value: -75
+      objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113640, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -9971,10 +9979,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 337304344530863296, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 337304346038413038, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
       propertyPath: cam
       value: 
@@ -9984,33 +9988,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1655375677}
     - target: {fileID: 337304346038413038, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
-      propertyPath: damperJoint
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 337304346038413038, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
-      propertyPath: springJoint
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 337304346038413038, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
-      propertyPath: maxJointDist
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 337304346038413038, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
-      propertyPath: minJointDist
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 337304346038413038, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
-      propertyPath: massScaleJoint
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 337304346038413038, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
       propertyPath: ropeLeftBehind
       value: 
       objectReference: {fileID: 42315133}
-    - target: {fileID: 337304346038413039, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
-      propertyPath: m_Parameters.widthMultiplier
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 4345530903205053621, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -10059,8 +10039,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 337304346038413042, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
 --- !u!4 &8837074069911551873 stripped
 Transform:
