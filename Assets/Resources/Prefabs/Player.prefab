@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &337304344530863299
 Transform:
   m_ObjectHideFlags: 0
@@ -296,6 +296,12 @@ MonoBehaviour:
   cam: {fileID: 6515905149919152226}
   player: {fileID: 4345530903205053621}
   maxDist: 1000
+  maxJointDist: 0
+  minJointDist: 0
+  springJoint: 0
+  damperJoint: 0
+  massScaleJoint: 0
+  ropeLeftBehind: {fileID: 0}
 --- !u!1 &2810701359487607132
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,10 +602,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkForce: 100
   maxWalkVelocity: 10
-  crouchForce: 6
-  maxCrouchVelocity: 6
   jumpForce: 1000
-  crouchJumpForce: 200
+  grappleMaxVelocity: 20
+  forwardGrappleMovementMultiplier: 1
+  sidewaysGrappleMovementMultiplier: 1
+  grappleGravity: -20
   gravity: -20
   groundCheckDist: 0.5
   groundCheckPos: {fileID: 4345530903079763904}
@@ -736,10 +743,16 @@ MonoBehaviour:
   grappleSurface:
     serializedVersion: 2
     m_Bits: 0
-  gunTip: {fileID: 337304344530863299}
+  gunTip: {fileID: 0}
   cam: {fileID: 0}
   player: {fileID: 4345530903205053621}
-  maxDist: 200
+  maxDist: 50
+  maxJointDist: 0.7
+  minJointDist: 0.7
+  springJoint: 25
+  damperJoint: 10
+  massScaleJoint: 1000
+  ropeLeftBehind: {fileID: 0}
 --- !u!1 &4345530903354835844
 GameObject:
   m_ObjectHideFlags: 0

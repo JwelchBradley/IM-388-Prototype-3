@@ -78,6 +78,9 @@ public class PlayerMovement : MonoBehaviour
     [Range(0, 10)]
     private float sidewaysGrappleMovementMultiplier = 1.5f;
 
+    [SerializeField]
+    private float grappleGravity = -100f;
+
     /*
     [SerializeField]
     [Tooltip("How much velocity the player has when jumping")]
@@ -94,6 +97,11 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("The rate at which gravity scales")]
     [Range(-200, 0)]
     private float gravity = -9.8f;
+
+    /// <summary>
+    /// The current gravity being put onto the player.
+    /// </summary>
+    private float currentGravity = -9.8f;
 
     [Space]
     [SerializeField]
@@ -153,6 +161,7 @@ public class PlayerMovement : MonoBehaviour
         currentForce = walkForce;
         currentJumpForce = jumpForce;
         currentMaxVelocity = maxWalkVelocity;
+        currentGravity = gravity;
 
         //controller = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
@@ -274,7 +283,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isGrounded)
         {
-            rb.AddForce(new Vector3(0, gravity, 0), ForceMode.Acceleration);
+            rb.AddForce(new Vector3(0, currentGravity, 0), ForceMode.Acceleration);
         }
     }
 
@@ -283,11 +292,6 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void MovePlayer()
     {
-        // Calculates the movement direction
-        Vector3 currentMove = cameraTransform.right * move.x + cameraTransform.forward * move.z;
-        currentMove.y = 0;
-        currentMove.Normalize();
-
         CounterMovement();
 
         //Some multipliers
@@ -303,14 +307,20 @@ public class PlayerMovement : MonoBehaviour
         Vector3 velocity = rb.velocity;
         velocity.y = 0;
 
-        currentMove = move;
+        Vector3 currentMove = move;
 
         //Find actual velocity relative to where player is looking
         Vector2 mag = FindVelRelativeToLook();
         float xMag = mag.x, yMag = mag.y;
 
+        if(GetComponent<SpringJoint>() == null)
+        {
+            currentGravity = gravity;
+        }
+
         if(GetComponent<SpringJoint>() != null)
         {
+            currentGravity = grappleGravity;
             multiplier = forwardGrappleMovementMultiplier;
             multiplierZ = sidewaysGrappleMovementMultiplier;
 
@@ -326,15 +336,15 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
-                if (currentMove.x > 0 && xMag > currentMaxVelocity * .5f) currentMove.x = 0;
-                if (currentMove.x < 0 && xMag < -currentMaxVelocity * .5f) currentMove.x = 0;
+                if (currentMove.x > 0 && xMag > currentMaxVelocity * .8f) currentMove.x = 0;
+                if (currentMove.x < 0 && xMag < -currentMaxVelocity * .8f) currentMove.x = 0;
 
-                if (currentMove.z > 0 && yMag > currentMaxVelocity * .5f) currentMove.z = 0;
-                if (currentMove.z < 0 && yMag < -currentMaxVelocity * .5f) currentMove.z = 0;
+                if (currentMove.z > 0 && yMag > currentMaxVelocity * .8f) currentMove.z = 0;
+                if (currentMove.z < 0 && yMag < -currentMaxVelocity * .8f) currentMove.z = 0;
             }
 
         }
-        else if(currentMove.x == 0 || currentMove.z == 0)
+        else if((currentMove.x == 0 || currentMove.z == 0) && !(currentMove.x == 0 && currentMove.z == 0))
         {
             //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
             if (currentMove.x > 0 && xMag > currentMaxVelocity) currentMove.x = 0;
@@ -373,15 +383,16 @@ public class PlayerMovement : MonoBehaviour
         forward.y = 0;
         Vector3 right = cameraTransform.right;
         right.y = 0;
-        rb.AddForce(forward * currentMove.z * currentForce * multiplier);
-        rb.AddForce(right * currentMove.x * currentForce * multiplierZ);
+
+        rb.AddForce(forward.normalized * currentMove.z * currentForce * multiplier);
+        rb.AddForce(right.normalized * currentMove.x * currentForce * multiplierZ);
     }
 
     private float threshold = 0.01f;
     public float counterMovement = 0.175f;
     private void CounterMovement()
     {
-        if (!isGrounded || isJumping) return;
+        if (!isGrounded || isJumping || GetComponent<SpringJoint>() != null) return;
 
         Vector2 mag = FindVelRelativeToLook();
 
@@ -401,15 +412,6 @@ public class PlayerMovement : MonoBehaviour
             forward.y = 0;
             rb.AddForce(walkForce * forward * -mag.y * counterMovement);
         }
-
-        /*
-        //Limit diagonal running. This will also cause a full stop if sliding fast and un-crouching, so not optimal.
-        if (Mathf.Sqrt((Mathf.Pow(rb.velocity.x, 2) + Mathf.Pow(rb.velocity.z, 2))) > currentMaxVelocity)
-        {
-            float fallspeed = rb.velocity.y;
-            Vector3 n = rb.velocity.normalized * currentMaxVelocity;
-            rb.velocity = new Vector3(n.x, fallspeed, n.z);
-        }*/
     }
 
     /// <summary>
