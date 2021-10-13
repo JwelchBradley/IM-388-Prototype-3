@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [Range(0, 20)]
     private float maxWalkVelocity = 10;
 
+    /*
     [Space]
     [SerializeField]
     [Tooltip("The acceleration speed while the player is crouching")]
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("The max speed of the player while crouching")]
     [Range(0, 20)]
     private float maxCrouchVelocity = 6;
+    */
 
     /// <summary>
     /// Holds the current movement speed of the player.
@@ -60,10 +62,28 @@ public class PlayerMovement : MonoBehaviour
     [Range(100, 10000)]
     private float jumpForce = 300;
 
+    [Space]
+    [SerializeField]
+    [Tooltip("How fast the player can move while on the grapple")]
+    [Range(0, 50)]
+    private float grappleMaxVelocity = 20;
+
+    [SerializeField]
+    [Tooltip("The amount of control the player has while grappling")]
+    [Range(0, 10)]
+    private float forwardGrappleMovementMultiplier = 2f;
+
+    [SerializeField]
+    [Tooltip("The amount of control the player has while grappling")]
+    [Range(0, 10)]
+    private float sidewaysGrappleMovementMultiplier = 1.5f;
+
+    /*
     [SerializeField]
     [Tooltip("How much velocity the player has when jumping")]
     [Range(100, 3000)]
     private float crouchJumpForce = 200;
+    */
 
     /// <summary>
     /// The height the player currently jumps to.
@@ -93,13 +113,6 @@ public class PlayerMovement : MonoBehaviour
     /// Holds true if the player is on the ground.
     /// </summary>
     private bool isGrounded = false;
-
-    private bool isCrouching = false;
-
-    /// <summary>
-    /// Holds reference to interactable objects that the player is on.
-    /// </summary>
-    public static Collider[] playerIsOn;
     #endregion
 
     #region Cameras
@@ -287,10 +300,6 @@ public class PlayerMovement : MonoBehaviour
             multiplierZ = 1;
         }
 
-        // Provides less movement when in the air and sliding
-        currentMove.x *= multiplier;
-        currentMove.z *= multiplier * multiplierZ;
-
         Vector3 velocity = rb.velocity;
         velocity.y = 0;
 
@@ -300,7 +309,32 @@ public class PlayerMovement : MonoBehaviour
         Vector2 mag = FindVelRelativeToLook();
         float xMag = mag.x, yMag = mag.y;
 
-        if(currentMove.x == 0 || currentMove.z == 0)
+        if(GetComponent<SpringJoint>() != null)
+        {
+            multiplier = forwardGrappleMovementMultiplier;
+            multiplierZ = sidewaysGrappleMovementMultiplier;
+
+            if(currentMove.x == 0 || currentMove.z == 0)
+            {
+                //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
+                if (currentMove.x > 0 && xMag > grappleMaxVelocity) currentMove.x = 0;
+                if (currentMove.x < 0 && xMag < -grappleMaxVelocity) currentMove.x = 0;
+
+                if (currentMove.z > 0 && yMag > grappleMaxVelocity) currentMove.z = 0;
+                if (currentMove.z < 0 && yMag < -grappleMaxVelocity) currentMove.z = 0;
+            }
+            else
+            {
+                //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
+                if (currentMove.x > 0 && xMag > currentMaxVelocity * .5f) currentMove.x = 0;
+                if (currentMove.x < 0 && xMag < -currentMaxVelocity * .5f) currentMove.x = 0;
+
+                if (currentMove.z > 0 && yMag > currentMaxVelocity * .5f) currentMove.z = 0;
+                if (currentMove.z < 0 && yMag < -currentMaxVelocity * .5f) currentMove.z = 0;
+            }
+
+        }
+        else if(currentMove.x == 0 || currentMove.z == 0)
         {
             //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
             if (currentMove.x > 0 && xMag > currentMaxVelocity) currentMove.x = 0;
@@ -330,13 +364,17 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        // Provides less movement when in the air and sliding
+        currentMove.x *= multiplier;
+        currentMove.z *= multiplier * multiplierZ;
+
         //Apply forces to move player
         Vector3 forward = cameraTransform.forward;
         forward.y = 0;
         Vector3 right = cameraTransform.right;
         right.y = 0;
-        rb.AddForce(forward * currentMove.z * currentForce * multiplier * multiplierZ);
-        rb.AddForce(right * currentMove.x * currentForce * multiplier);
+        rb.AddForce(forward * currentMove.z * currentForce * multiplier);
+        rb.AddForce(right * currentMove.x * currentForce * multiplierZ);
     }
 
     private float threshold = 0.01f;
