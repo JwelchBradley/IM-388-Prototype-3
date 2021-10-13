@@ -35,6 +35,8 @@ public class GrappleScript : MonoBehaviour
     [Tooltip("Mass scale for spring joint.")]
     public float massScaleJoint;
 
+    public GameObject ropeLeftBehind;
+
     /// <summary>
     /// Asign variables
     /// </summary>
@@ -113,6 +115,25 @@ public class GrappleScript : MonoBehaviour
     /// </summary>
     void StopGrapple()
     {
+
+        // Leave rope behind
+        SpringJoint sj = ropeLeftBehind.GetComponent<SpringJoint>();
+        sj.autoConfigureConnectedAnchor = false;
+        sj.connectedAnchor = grapplePoint;
+
+        float distFromPoint = Vector3.Distance(player.position, grapplePoint);
+
+        sj.maxDistance = distFromPoint * maxJointDist;
+        sj.minDistance = distFromPoint * minJointDist;
+
+        sj.spring = springJoint;
+        sj.damper = damperJoint;
+        sj.massScale = massScaleJoint;
+
+        Instantiate(ropeLeftBehind, transform.position, transform.rotation);
+        //
+
+
         lineR.positionCount = 0;
         Destroy(joint);
     }
