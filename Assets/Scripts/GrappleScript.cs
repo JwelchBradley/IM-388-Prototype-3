@@ -35,6 +35,8 @@ public class GrappleScript : MonoBehaviour
     [Tooltip("Mass scale for spring joint.")]
     public float massScaleJoint;
 
+    public float toleranceJoint;
+
     public GameObject ropeLeftBehind;
 
     /// <summary>
@@ -73,9 +75,12 @@ public class GrappleScript : MonoBehaviour
     /// </summary>
     void StartGrapple()
     {
+        if (Time.timeScale != 0)
+        { 
+
         // Player is within range of a grapple object
         RaycastHit hit;
-        if(Physics.Raycast(cam.position, cam.forward, out hit, maxDist))
+        if (Physics.Raycast(cam.position, cam.forward, out hit, maxDist))
         {
             // Create positions for joint
             grapplePoint = hit.point;
@@ -89,10 +94,11 @@ public class GrappleScript : MonoBehaviour
             joint.maxDistance = distFromPoint * maxJointDist;
             joint.minDistance = distFromPoint * minJointDist;
 
-            joint.spring = springJoint; 
+            joint.spring = springJoint;
             joint.damper = damperJoint;
             joint.massScale = massScaleJoint;
-
+            joint.tolerance = toleranceJoint;
+            }
         }
     }
 
@@ -115,24 +121,25 @@ public class GrappleScript : MonoBehaviour
     /// </summary>
     void StopGrapple()
     {
+        if (ropeLeftBehind != null)
+        {
+            // Leave rope behind
+            SpringJoint sj = ropeLeftBehind.GetComponent<SpringJoint>();
+            sj.autoConfigureConnectedAnchor = false;
+            sj.connectedAnchor = grapplePoint;
 
-        // Leave rope behind
-        SpringJoint sj = ropeLeftBehind.GetComponent<SpringJoint>();
-        sj.autoConfigureConnectedAnchor = false;
-        sj.connectedAnchor = grapplePoint;
+            float distFromPoint = Vector3.Distance(player.position, grapplePoint);
 
-        float distFromPoint = Vector3.Distance(player.position, grapplePoint);
+            sj.maxDistance = distFromPoint * maxJointDist;
+            sj.minDistance = distFromPoint * minJointDist;
 
-        sj.maxDistance = distFromPoint * maxJointDist;
-        sj.minDistance = distFromPoint * minJointDist;
+            sj.spring = springJoint;
+            sj.damper = damperJoint;
+            sj.massScale = massScaleJoint;
 
-        sj.spring = springJoint;
-        sj.damper = damperJoint;
-        sj.massScale = massScaleJoint;
-
-        Instantiate(ropeLeftBehind, transform.position, transform.rotation);
-        //
-
+            Instantiate(ropeLeftBehind, transform.position, transform.rotation);
+            //
+        }
 
         lineR.positionCount = 0;
         Destroy(joint);
