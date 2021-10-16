@@ -24,19 +24,6 @@ public class PlayerMovement : MonoBehaviour
     [Range(0, 20)]
     private float maxWalkVelocity = 10;
 
-    /*
-    [Space]
-    [SerializeField]
-    [Tooltip("The acceleration speed while the player is crouching")]
-    [Range(100, 1000)]
-    private float crouchForce = 6;
-
-    [SerializeField]
-    [Tooltip("The max speed of the player while crouching")]
-    [Range(0, 20)]
-    private float maxCrouchVelocity = 6;
-    */
-
     /// <summary>
     /// Holds the current movement speed of the player.
     /// </summary>
