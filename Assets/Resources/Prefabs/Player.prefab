@@ -303,6 +303,7 @@ MonoBehaviour:
   massScaleJoint: 0
   toleranceJoint: 0
   ropeLeftBehind: {fileID: 0}
+  inRange: {fileID: 0}
 --- !u!1 &2810701359487607132
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,6 +413,7 @@ GameObject:
   - component: {fileID: 337304346038413038}
   - component: {fileID: 5111010940040262766}
   - component: {fileID: 5111010940040262765}
+  - component: {fileID: 1099290134}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -520,6 +522,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   counterMovement: 0.175
+  waitToRestart: 1
+  deathSound: {fileID: 8300000, guid: 62c3b0e8fd6e0d34285dd9f9cd85ff8c, type: 3}
 --- !u!54 &337304346038413043
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -581,7 +585,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -629,7 +633,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
@@ -652,14 +656,15 @@ MonoBehaviour:
   gunTip: {fileID: 0}
   cam: {fileID: 0}
   player: {fileID: 4345530903205053621}
-  maxDist: 50
+  maxDist: 75
   maxJointDist: 0.3
-  minJointDist: 0.25
+  minJointDist: 0.3
   springJoint: 4
   damperJoint: 2
   massScaleJoint: 2
   toleranceJoint: 0
   ropeLeftBehind: {fileID: 0}
+  inRange: {fileID: 0}
 --- !u!82 &5111010940040262766
 AudioSource:
   m_ObjectHideFlags: 0
@@ -770,6 +775,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRB: {fileID: 337304346038413043}
   minWooshSpeed: 30
+--- !u!95 &1099290134
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4345530903205053625}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aa6aaae902c40354e88d66cb3a06b8c2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4345530903354835844
 GameObject:
   m_ObjectHideFlags: 0
