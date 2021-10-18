@@ -9,12 +9,16 @@ public class ParticleSystemToggle : MonoBehaviour
     Vector3 velocity;
     ParticleSystem ps;
     [SerializeField]
-    float speedLineVelocity = 100;
+    float speedLineVelocity = 10;
 
     // Start is called before the first frame update
-    void Start()
+    void FixedUpdate()
     {
+        velocity = rb.velocity;
+
         velocity.y = 0;
+
+        Awake();
 
         if (velocity.magnitude > speedLineVelocity)
         {
@@ -34,5 +38,12 @@ public class ParticleSystemToggle : MonoBehaviour
     private void despawnLines()
     {
         ps.Stop();
+    }
+
+    private void Awake()
+    {
+        rb = GameObject.Find("Player").GetComponent<Rigidbody>();
+        ps = GetComponent<ParticleSystem>();
+
     }
 }

@@ -658,7 +658,7 @@ MonoBehaviour:
   player: {fileID: 4345530903205053621}
   maxDist: 75
   maxJointDist: 0.3
-  minJointDist: 0.25
+  minJointDist: 0.3
   springJoint: 4
   damperJoint: 2
   massScaleJoint: 2

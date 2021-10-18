@@ -439,6 +439,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Win"))
+        {
+            //LoadWinScreen();
+        }
+    }
+
     [SerializeField]
     private float waitToRestart = 1;
     [SerializeField]
