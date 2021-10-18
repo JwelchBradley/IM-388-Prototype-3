@@ -412,6 +412,7 @@ GameObject:
   - component: {fileID: 337304346038413038}
   - component: {fileID: 5111010940040262766}
   - component: {fileID: 5111010940040262765}
+  - component: {fileID: 1099290134}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -520,6 +521,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   counterMovement: 0.175
+  waitToRestart: 1
+  deathSound: {fileID: 8300000, guid: 62c3b0e8fd6e0d34285dd9f9cd85ff8c, type: 3}
 --- !u!54 &337304346038413043
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -654,7 +657,7 @@ MonoBehaviour:
   player: {fileID: 4345530903205053621}
   maxDist: 50
   maxJointDist: 0.3
-  minJointDist: 0.25
+  minJointDist: 0.3
   springJoint: 4
   damperJoint: 2
   massScaleJoint: 2
@@ -770,6 +773,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRB: {fileID: 337304346038413043}
   minWooshSpeed: 30
+--- !u!95 &1099290134
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4345530903205053625}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aa6aaae902c40354e88d66cb3a06b8c2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4345530903354835844
 GameObject:
   m_ObjectHideFlags: 0
