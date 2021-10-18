@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class GrappleScript : MonoBehaviour
 {
@@ -60,6 +63,8 @@ public class GrappleScript : MonoBehaviour
         { 
             StopGrapple();
         }
+
+        GrappleWithinRange();
     }
 
     /// <summary>
@@ -68,6 +73,28 @@ public class GrappleScript : MonoBehaviour
     private void LateUpdate()
     {
         DrawRope();
+    }
+
+    public GameObject inRange;
+
+    void GrappleWithinRange()
+    {
+        RaycastHit hit;
+
+        Image crossColor = inRange.GetComponent<Image>();
+
+        // Close enough to grapple towards target
+        if (Physics.Raycast(cam.position, cam.forward, out hit, maxDist))
+        {
+            inRange.transform.localScale = new Vector3(1f, 1f, 1f);
+            crossColor.color = Color.green;
+        }
+        // Not close enough
+        else
+        {
+            inRange.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            crossColor.color = Color.red;
+        }
     }
 
     /// <summary>
