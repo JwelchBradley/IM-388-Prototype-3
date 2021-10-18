@@ -25,6 +25,18 @@ public class PauseMenuBehavior : MenuBehavior
     /// </summary>
     private bool canPause = false;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool CanPause
+    {
+        get => canPause;
+        set
+        {
+            canPause = value;
+        }
+    }
+
     [Space]
     [SerializeField]
     [Tooltip("The panels that can be activated in the pause menu")]

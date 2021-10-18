@@ -13,9 +13,9 @@ using UnityEngine.SceneManagement;
 public class MenuBehavior : MonoBehaviour
 {
     #region Variables
-    [SerializeField]
+    //[SerializeField]
     [Tooltip("Animator of level crossfade")]
-    protected Animator crossfadeAnim;
+    public Animator crossfadeAnim;
 
     [SerializeField]
     [Tooltip("Tick true if there is a loading screen")]
@@ -86,6 +86,11 @@ public class MenuBehavior : MonoBehaviour
         crossfadeAnim.SetBool("levelEnd", true);
 
         yield return null;
+
+        if(sceneName.Equals("Next Level"))
+        {
+            sceneName = SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex+1).name;
+        }
 
         // Preloads the scene and then loads it after the scene has faded out
         AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName);

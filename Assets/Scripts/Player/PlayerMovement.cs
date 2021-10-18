@@ -441,10 +441,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Win"))
+        if (other.gameObject.CompareTag("Win") && notDead)
         {
-            //LoadWinScreen();
+            notDead = false;
+            LoadWinScreen();
         }
+    }
+
+    private void LoadWinScreen()
+    {
+        GameObject pauseMenuCanvas = GameObject.Find("Pause Menu Templates Canvas");
+        PauseMenuBehavior pmb = pauseMenuCanvas.GetComponent<PauseMenuBehavior>();
+        pmb.CanPause = false;
+
+        GameObject winScreen = (GameObject) Instantiate(Resources.Load("Prefabs/Win Screen Variant", typeof(GameObject)));
+        winScreen.transform.SetParent(pauseMenuCanvas.transform);
+        RectTransform rectTransform = winScreen.GetComponent<RectTransform>();
+        rectTransform.localPosition = Vector3.zero;
+        Vector3 forward = cameraTransform.forward;
+        crouchCam.Follow.transform.forward = forward;
+        crouchCam.Priority = 100;
+
+        MenuBehavior mb = winScreen.GetComponent<MenuBehavior>();
+        mb.crossfadeAnim = GameObject.Find("Crossfade").GetComponent<Animator>();
+
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     [SerializeField]
