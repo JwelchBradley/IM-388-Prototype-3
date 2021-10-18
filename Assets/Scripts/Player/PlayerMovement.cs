@@ -7,7 +7,9 @@
 *****************************************************************************/
 using Cinemachine;
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -176,7 +178,10 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="move">The Vector2 movement for the player.</param>
     public void MovePlayer(Vector2 move)
     {
-        this.move = new Vector3(move.x, 0, move.y);
+        if (notDead)
+            this.move = new Vector3(move.x, 0, move.y);
+        else
+            this.move = Vector3.zero;
     }
 
     /// <summary>
@@ -421,6 +426,51 @@ public class PlayerMovement : MonoBehaviour
         float xMag = magnitue * Mathf.Cos(v * Mathf.Deg2Rad);
 
         return new Vector2(xMag, yMag);
+    }
+    #endregion
+
+    #region Collisions
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Hazard") && notDead)
+        {
+            notDead = false;
+            StartCoroutine(Restart());
+        }
+    }
+
+    [SerializeField]
+    private float waitToRestart = 1;
+    [SerializeField]
+    private AudioClip deathSound;
+    private AudioSource aud;
+    private Animator anim;
+    private bool notDead = true;
+    private IEnumerator Restart()
+    {
+        aud = GetComponent<AudioSource>();
+        aud.PlayOneShot(deathSound, 1);
+        anim = GetComponent<Animator>();
+        //anim.SetBool("isDead", true);
+        crouchCam.Priority = 100;
+        Vector3 forward = cameraTransform.forward;
+        crouchCam.Follow.transform.forward = forward;
+        forward.x = 0;
+        forward.y = 0;
+        transform.rotation = cameraTransform.rotation;
+        transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
+        StartCoroutine(DeathAnim());
+        yield return new WaitForSeconds(waitToRestart);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private IEnumerator DeathAnim()
+    {
+        while (true)
+        {
+            transform.Rotate(90, 0, 0, Space.Self);
+            yield return new WaitForFixedUpdate();
+        }
     }
     #endregion
     #endregion
