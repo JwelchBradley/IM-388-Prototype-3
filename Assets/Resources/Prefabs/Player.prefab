@@ -303,6 +303,7 @@ MonoBehaviour:
   massScaleJoint: 0
   toleranceJoint: 0
   ropeLeftBehind: {fileID: 0}
+  inRange: {fileID: 0}
 --- !u!1 &2810701359487607132
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +585,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -632,7 +633,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
@@ -655,7 +656,7 @@ MonoBehaviour:
   gunTip: {fileID: 0}
   cam: {fileID: 0}
   player: {fileID: 4345530903205053621}
-  maxDist: 50
+  maxDist: 75
   maxJointDist: 0.3
   minJointDist: 0.3
   springJoint: 4
@@ -663,6 +664,7 @@ MonoBehaviour:
   massScaleJoint: 2
   toleranceJoint: 0
   ropeLeftBehind: {fileID: 0}
+  inRange: {fileID: 0}
 --- !u!82 &5111010940040262766
 AudioSource:
   m_ObjectHideFlags: 0

@@ -51,6 +51,7 @@ public class WooshSoundBehaviour : MonoBehaviour
 
         if(velocity.magnitude < minWooshSpeed)
         {
+            aud.Stop();
             canWoosh = true;
         }
     }
