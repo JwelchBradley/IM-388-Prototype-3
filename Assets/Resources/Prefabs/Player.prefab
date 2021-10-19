@@ -652,7 +652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grappleSurface:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   gunTip: {fileID: 0}
   cam: {fileID: 0}
   player: {fileID: 4345530903205053621}

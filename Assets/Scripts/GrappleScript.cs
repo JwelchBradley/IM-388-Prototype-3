@@ -84,7 +84,7 @@ public class GrappleScript : MonoBehaviour
         Image crossColor = inRange.GetComponent<Image>();
 
         // Close enough to grapple towards target
-        if (Physics.Raycast(cam.position, cam.forward, out hit, maxDist))
+        if (Physics.Raycast(cam.position, cam.forward, out hit, maxDist, grappleSurface))
         {
             inRange.transform.localScale = new Vector3(1f, 1f, 1f);
             crossColor.color = Color.green;
@@ -105,9 +105,10 @@ public class GrappleScript : MonoBehaviour
         if (Time.timeScale != 0)
         { 
 
+
         // Player is within range of a grapple object
         RaycastHit hit;
-        if (Physics.Raycast(cam.position, cam.forward, out hit, maxDist))
+        if (Physics.Raycast(cam.position, cam.forward, out hit, maxDist, grappleSurface))
         {
             // Create positions for joint
             grapplePoint = hit.point;
