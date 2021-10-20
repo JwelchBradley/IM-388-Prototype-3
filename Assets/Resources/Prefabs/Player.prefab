@@ -656,7 +656,7 @@ MonoBehaviour:
   gunTip: {fileID: 0}
   cam: {fileID: 0}
   player: {fileID: 4345530903205053621}
-  maxDist: 75
+  maxDist: 90
   maxJointDist: 0.3
   minJointDist: 0.3
   springJoint: 4
