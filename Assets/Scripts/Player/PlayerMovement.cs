@@ -385,7 +385,6 @@ public class PlayerMovement : MonoBehaviour
     private void CounterMovement()
     {
         if (!isGrounded || isJumping || GetComponent<SpringJoint>() != null) return;
-        Debug.Log(true);
 
         Vector2 mag = FindVelRelativeToLook();
 

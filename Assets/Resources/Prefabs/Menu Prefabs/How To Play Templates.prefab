@@ -355,46 +355,20 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<U>Designers</U>
+  m_text: '<u>Controls</U>
 
-    Jacob Welch
+    <B>Move:</b> WASD
 
+    <b>Jump:</b> Space
 
-    <u>Assets Used</u>
+    <b>Grapple:</b>
+    Left Click
 
-    KennyS
+    <b>Aim:</b> Mouse
 
+    <b>Open Pause:</b> - Esc
 
-    other
-    stuff
-
-    other stuff
-
-    other stuff
-
-    other stuff
-
-    other stuff
-
-    other
-    stuff
-
-    other stuff
-
-    other stuff
-
-    other stuff
-
-    other stuff
-
-    other
-    stuff
-
-    other stuff
-
-    other stuff
-
-    other stuff'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b155d794de98b6c4cbb95ddf84f16973, type: 2}
   m_sharedMaterial: {fileID: -307628103276417960, guid: b155d794de98b6c4cbb95ddf84f16973, type: 2}
@@ -433,7 +407,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 28
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -572,6 +546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5557274338727273488}
+  - component: {fileID: 5557274339517985406}
   m_Layer: 5
   m_Name: How To Play Templates
   m_TagString: Untagged
@@ -599,6 +574,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1820, y: 980}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5557274339517985406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557274338727273495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ccff87836bccfc449a6b3741df68a89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5557274338778725655
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,8 +618,8 @@ RectTransform:
   m_Father: {fileID: 5557274339437532194}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.6234025}
+  m_AnchorMax: {x: 1, y: 0.99999994}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -692,7 +679,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5557274338984801594
 RectTransform:
   m_ObjectHideFlags: 0
@@ -925,10 +912,10 @@ RectTransform:
   m_Father: {fileID: 5557274338428136134}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 450, y: -493.4025}
+  m_SizeDelta: {x: 820, y: 753.195}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5557274339256387226
 CanvasRenderer:
@@ -975,7 +962,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5557274339256387230}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
@@ -1143,10 +1130,10 @@ RectTransform:
   m_Father: {fileID: 5557274338428136134}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 450, y: -438.4025}
+  m_SizeDelta: {x: 820, y: 836.805}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5557274339628772158
 CanvasRenderer:
