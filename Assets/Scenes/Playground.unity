@@ -8937,6 +8937,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1842446900, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1842446900, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0196
+      objectReference: {fileID: 0}
+    - target: {fileID: 1842446900, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0523
+      objectReference: {fileID: 0}
     - target: {fileID: 1119962703066126360, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_Follow
       value: 
@@ -24341,11 +24353,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!4 &759780666 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1655375677, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
-  m_PrefabInstance: {fileID: 230738160}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &763790800
 Mesh:
   m_ObjectHideFlags: 0
@@ -28547,6 +28554,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &849718830 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1842446900, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+  m_PrefabInstance: {fileID: 230738160}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &878930934
 GameObject:
   m_ObjectHideFlags: 0
@@ -58586,7 +58598,7 @@ PrefabInstance:
     - target: {fileID: 337304346038413038, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
       propertyPath: gunTip
       value: 
-      objectReference: {fileID: 759780666}
+      objectReference: {fileID: 849718830}
     - target: {fileID: 337304346038413038, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
       propertyPath: inRange
       value: 
