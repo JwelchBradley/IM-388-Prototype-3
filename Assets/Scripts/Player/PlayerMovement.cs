@@ -385,6 +385,7 @@ public class PlayerMovement : MonoBehaviour
     private void CounterMovement()
     {
         if (!isGrounded || isJumping || GetComponent<SpringJoint>() != null) return;
+        Debug.Log(true);
 
         Vector2 mag = FindVelRelativeToLook();
 
@@ -479,6 +480,8 @@ public class PlayerMovement : MonoBehaviour
     {
         aud = GetComponent<AudioSource>();
         aud.PlayOneShot(deathSound, 1);
+        AudioSource.PlayClipAtPoint(deathSound, transform.position);
+
         anim = GetComponent<Animator>();
         //anim.SetBool("isDead", true);
         crouchCam.Priority = 100;

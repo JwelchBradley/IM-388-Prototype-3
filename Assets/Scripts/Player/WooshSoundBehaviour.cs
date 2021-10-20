@@ -51,7 +51,11 @@ public class WooshSoundBehaviour : MonoBehaviour
 
         if(velocity.magnitude < minWooshSpeed)
         {
-            aud.Stop();
+            //aud.Stop();
+            if(aud.volume != 0)
+            {
+                aud.volume -= Time.deltaTime * 10;
+            }
             canWoosh = true;
         }
     }
@@ -60,9 +64,11 @@ public class WooshSoundBehaviour : MonoBehaviour
     {
         if(canWoosh)
         {
-            aud.Play();
+            float t = (objectRB.velocity.magnitude - minWooshSpeed)*2 / 100;
+            aud.volume = Mathf.Lerp(0, 1, t);
+            //aud.Play();
 
-            canWoosh = false;
+            //canWoosh = false;
         }
     }
 }

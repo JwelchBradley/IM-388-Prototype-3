@@ -87,13 +87,18 @@ public class MenuBehavior : MonoBehaviour
 
         yield return null;
 
-        if(sceneName.Equals("Next Level"))
-        {
-            sceneName = SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex+1).name;
-        }
+        AsyncOperation loadOp;
 
+        if (sceneName.Equals("Next Level"))
+        {
+            loadOp = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex+1);
+        }
+        else
+        {
+            loadOp = SceneManager.LoadSceneAsync(sceneName);
+        }
         // Preloads the scene and then loads it after the scene has faded out
-        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName);
+        
         loadOp.allowSceneActivation = false;
 
         yield return new WaitForSecondsRealtime(crossfadeAnim.GetCurrentAnimatorStateInfo(0).length);
