@@ -42,10 +42,16 @@ public class GrappleScript : MonoBehaviour
 
     public float toleranceJoint;
 
+    [Header("Player Assistance")]
     [SerializeField]
     [Tooltip("The size of the box cast that provides slight aim assist")]
     [Range(0, 10)]
     private float aimAssitMultiplier = 5;
+
+    [SerializeField]
+    [Tooltip("Controls the size of the sphere")]
+    [Range(0, 50)]
+    private float sphereSizeMod = 10;
     #endregion
 
     public GameObject ropeLeftBehind;
@@ -89,7 +95,7 @@ public class GrappleScript : MonoBehaviour
         canGrapple = Physics.Raycast(cam.position, cam.forward, out hit, maxDist, grappleSurface);
 
         if (!canGrapple)
-            canGrapple = Physics.BoxCast(cam.position, Vector3.one * aimAssitMultiplier, cam.forward, out hit, Quaternion.identity, maxDist, grappleSurface);
+            canGrapple = Physics.BoxCast(cam.position, Vector3.one * aimAssitMultiplier, cam.forward, out hit, Quaternion.Euler(45, 0, 0), maxDist, grappleSurface);
 
         GrappleWithinRange();
     }
@@ -124,7 +130,7 @@ public class GrappleScript : MonoBehaviour
             else
             {
                 grappleLocationSphere.transform.position = hit.point;
-                grappleLocationSphere.transform.localScale = Vector3.one * hit.distance/10;
+                grappleLocationSphere.transform.localScale = Vector3.one * hit.distance*(sphereSizeMod/100);
             }
             
         }
