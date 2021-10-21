@@ -203,59 +203,6 @@ public class PlayerMovement : MonoBehaviour
         isJumping = false;
     }
     bool isJumping = false;
-
-    /*
-    /// <summary>
-    /// Crouches or uncrouches the player.
-    /// </summary>
-    public void Crouch()
-    {
-        if(crouchCam.m_Priority != 2)
-        {
-            CrouchHelper(2, ref crouchCamPOV, ref walkCamPOV, crouchForce, crouchJumpForce);     // Crouches
-
-            isCrouching = true;
-
-            Slide();
-        }
-        else
-        {
-            CrouchHelper(0, ref walkCamPOV, ref crouchCamPOV, walkForce, jumpForce);           // Uncrouches
-
-            isCrouching = false;
-        }
-    }
-
-    private void Slide()
-    {
-        if (rb.velocity.magnitude > 0.5f)
-        {
-            if (isGrounded)
-            {
-                //rb.AddForce(cameraTransform.forward * slideForce);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Sets the current camera and changes the speed.
-    /// </summary>
-    /// <param name="camPriority">Sets the cam priority of the crouch cam to be higher or lower than the walk cam.</param>
-    /// <param name="setTo">The cam that is having its value changed.</param>
-    /// <param name="setFrom">The cam that is passing along its values.</param>
-    /// <param name="speed">The new speed of the player.</param>
-    private void CrouchHelper(int camPriority, ref CinemachinePOV setTo, ref CinemachinePOV setFrom, float speed, float jumpHeight)
-    {
-        // Keeps same look angle of the camera
-        setTo.m_VerticalAxis.Value = setFrom.m_VerticalAxis.Value;
-        setTo.m_HorizontalAxis.Value = setFrom.m_HorizontalAxis.Value;
-
-        // Changes the camera
-        crouchCam.m_Priority = camPriority;
-
-        // Sets the player move speed of the player
-        crouchForce = speed;
-    }*/
     #endregion
 
     #region Calculations
@@ -284,7 +231,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void MovePlayer()
     {
-        CounterMovement();
+        SpringJoint sj = GetComponent<SpringJoint>();
+        CounterMovement(sj);
 
         //Some multipliers
         float multiplier = 1f, multiplierZ = 1f;
@@ -305,12 +253,12 @@ public class PlayerMovement : MonoBehaviour
         Vector2 mag = FindVelRelativeToLook();
         float xMag = mag.x, yMag = mag.y;
 
-        if(GetComponent<SpringJoint>() == null)
+        if(sj == null)
         {
             currentGravity = gravity;
         }
 
-        if(GetComponent<SpringJoint>() != null)
+        if(sj != null)
         {
             currentGravity = grappleGravity;
             multiplier = forwardGrappleMovementMultiplier;
@@ -382,9 +330,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float threshold = 0.01f;
     public float counterMovement = 0.175f;
-    private void CounterMovement()
+    private void CounterMovement(SpringJoint sj)
     {
-        if (!isGrounded || isJumping || GetComponent<SpringJoint>() != null) return;
+        if (!isGrounded || isJumping || sj != null) return;
 
         Vector2 mag = FindVelRelativeToLook();
 

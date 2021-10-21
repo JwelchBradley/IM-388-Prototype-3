@@ -20,6 +20,8 @@ public class GrappleScript : MonoBehaviour
     [Tooltip("Camera and player.")]
     public Transform cam, player;
 
+    #region Grapple Values
+    [Header("Grapple values")]
     [Tooltip("How far player can shoot grapple.")]
     public float maxDist;
 
@@ -40,7 +42,23 @@ public class GrappleScript : MonoBehaviour
 
     public float toleranceJoint;
 
+    [SerializeField]
+    [Tooltip("The size of the box cast that provides slight aim assist")]
+    [Range(0, 10)]
+    private float aimAssitMultiplier = 5;
+    #endregion
+
     public GameObject ropeLeftBehind;
+
+    private bool canGrapple;
+
+    private bool isGrappling;
+
+    private RaycastHit hit;
+
+    private Image crossColor;
+
+    private GameObject grappleLocationSphere;
 
     /// <summary>
     /// Asign variables
@@ -48,6 +66,7 @@ public class GrappleScript : MonoBehaviour
     public void Start()
     {
         lineR = GetComponent<LineRenderer>();
+        crossColor = inRange.GetComponent<Image>();
     }
 
     /// <summary>
@@ -63,6 +82,14 @@ public class GrappleScript : MonoBehaviour
         { 
             StopGrapple();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        canGrapple = Physics.Raycast(cam.position, cam.forward, out hit, maxDist, grappleSurface);
+
+        if (!canGrapple)
+            canGrapple = Physics.BoxCast(cam.position, Vector3.one * aimAssitMultiplier, cam.forward, out hit, Quaternion.identity, maxDist, grappleSurface);
 
         GrappleWithinRange();
     }
@@ -79,21 +106,34 @@ public class GrappleScript : MonoBehaviour
 
     void GrappleWithinRange()
     {
-        RaycastHit hit;
-
-        Image crossColor = inRange.GetComponent<Image>();
-
         // Close enough to grapple towards target
-        if (Physics.Raycast(cam.position, cam.forward, out hit, maxDist, grappleSurface))
+        if (canGrapple)
         {
-            inRange.transform.localScale = new Vector3(1f, 1f, 1f);
+            inRange.transform.localScale = Vector3.one;
             crossColor.color = Color.green;
+
+            if (grappleLocationSphere == null)
+            {
+                grappleLocationSphere = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Grapple/Sphere", typeof(GameObject)));
+            }
+
+            if (isGrappling)
+            {
+                Destroy(grappleLocationSphere);
+            }
+            else
+            {
+                grappleLocationSphere.transform.position = hit.point;
+                grappleLocationSphere.transform.localScale = Vector3.one * hit.distance/10;
+            }
+            
         }
         // Not close enough
         else
         {
-            inRange.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            inRange.transform.localScale = Vector3.one/2;
             crossColor.color = Color.red;
+            Destroy(grappleLocationSphere);
         }
     }
 
@@ -104,12 +144,10 @@ public class GrappleScript : MonoBehaviour
     {
         if (Time.timeScale != 0)
         { 
-
-
-        // Player is within range of a grapple object
-        RaycastHit hit;
-        if (Physics.Raycast(cam.position, cam.forward, out hit, maxDist, grappleSurface))
+        if (canGrapple)
         {
+            isGrappling = true;
+
             // Create positions for joint
             grapplePoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();
@@ -149,6 +187,8 @@ public class GrappleScript : MonoBehaviour
     /// </summary>
     void StopGrapple()
     {
+        isGrappling = false;
+
         if (ropeLeftBehind != null)
         {
             // Leave rope behind
