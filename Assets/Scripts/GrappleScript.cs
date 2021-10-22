@@ -66,6 +66,8 @@ public class GrappleScript : MonoBehaviour
 
     private GameObject grappleLocationSphere;
 
+    public GameObject objectShotAt;
+
     /// <summary>
     /// Asign variables
     /// </summary>
@@ -160,26 +162,28 @@ public class GrappleScript : MonoBehaviour
     {
         if (Time.timeScale != 0)
         { 
-        if (canGrapple)
-        {
-            isGrappling = true;
+            if (canGrapple)
+            {
+                isGrappling = true;
 
-            // Create positions for joint
-            grapplePoint = hit.point;
-            joint = player.gameObject.AddComponent<SpringJoint>();
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = grapplePoint;
+                // Create positions for joint
+                grapplePoint = hit.point;
+                joint = player.gameObject.AddComponent<SpringJoint>();
+                joint.autoConfigureConnectedAnchor = false;
+                joint.connectedAnchor = grapplePoint;
 
-            float distFromPoint = Vector3.Distance(player.position, grapplePoint);
+                float distFromPoint = Vector3.Distance(player.position, grapplePoint);
 
-            // Joint settings
-            joint.maxDistance = distFromPoint * maxJointDist;
-            joint.minDistance = distFromPoint * minJointDist;
+                // Joint settings
+                joint.maxDistance = distFromPoint * maxJointDist;
+                joint.minDistance = distFromPoint * minJointDist;
 
-            joint.spring = springJoint;
-            joint.damper = damperJoint;
-            joint.massScale = massScaleJoint;
-            joint.tolerance = toleranceJoint;
+                joint.spring = springJoint;
+                joint.damper = damperJoint;
+                joint.massScale = massScaleJoint;
+                joint.tolerance = toleranceJoint;
+
+                objectShotAt = hit.collider.gameObject;
             }
         }
     }
