@@ -137,6 +137,8 @@ public class PlayerMovement : MonoBehaviour
     /// The CinemachinePOV of the crouch camera.
     /// </summary>
     private CinemachinePOV crouchCamPOV;
+
+    public GameObject SludgeOverlay;
     #endregion
     #endregion
 
@@ -154,6 +156,8 @@ public class PlayerMovement : MonoBehaviour
 
         //controller = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
+
+        SludgeOverlay.SetActive(false);
 
         GetCameras();
     }
@@ -398,6 +402,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Hazard") && notDead)
         {
             notDead = false;
+            SludgeOverlay.SetActive(true);
             StartCoroutine(DeathCount(3.0f));
         }
     }
@@ -407,6 +412,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Hazard") && !notDead)
         {
             notDead = true;
+            SludgeOverlay.SetActive(false);
         }
     }
 
