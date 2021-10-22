@@ -459,8 +459,14 @@ public class PlayerMovement : MonoBehaviour
     {
         while(!notDead)
         {
-            yield return new WaitForSeconds(waitTime);
-            StartCoroutine(Restart());
+            yield return new WaitForFixedUpdate();
+            waitTime -= Time.fixedDeltaTime;
+
+            if(waitTime < 0)
+            {
+                StartCoroutine(Restart());
+                break;
+            }
         }
     }
     private IEnumerator Restart()
