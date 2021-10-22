@@ -98,10 +98,11 @@ public class PauseMenuBehavior : MenuBehavior
     /// </summary>
     private void ResetPauseMenu()
     {
+        /*
         foreach(GameObject panel in menuPanels)
         {
             panel.SetActive(false);
-        }
+        }*/
     }
 
     /// <summary>

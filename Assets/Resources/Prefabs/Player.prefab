@@ -302,6 +302,8 @@ MonoBehaviour:
   damperJoint: 0
   massScaleJoint: 0
   toleranceJoint: 0
+  aimAssitMultiplier: 5
+  sphereSizeMod: 10
   ropeLeftBehind: {fileID: 0}
   inRange: {fileID: 0}
 --- !u!1 &2810701359487607132
@@ -511,17 +513,16 @@ MonoBehaviour:
   walkForce: 100
   maxWalkVelocity: 10
   jumpForce: 1000
+  gravity: -20
   grappleMaxVelocity: 20
   forwardGrappleMovementMultiplier: 1
   sidewaysGrappleMovementMultiplier: 1
   grappleGravity: -20
-  gravity: -20
   groundCheckDist: 0.5
   groundCheckPos: {fileID: 4345530903079763904}
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  counterMovement: 0.175
   waitToRestart: 1
   deathSound: {fileID: 8300000, guid: 62c3b0e8fd6e0d34285dd9f9cd85ff8c, type: 3}
 --- !u!54 &337304346038413043
@@ -663,6 +664,8 @@ MonoBehaviour:
   damperJoint: 2
   massScaleJoint: 2
   toleranceJoint: 0
+  aimAssitMultiplier: 7.5
+  sphereSizeMod: 10
   ropeLeftBehind: {fileID: 0}
   inRange: {fileID: 0}
 --- !u!82 &5111010940040262766
@@ -674,7 +677,7 @@ AudioSource:
   m_GameObject: {fileID: 4345530903205053625}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2101597039525888240, guid: 665224352e6e1b04f95e9d1f565b2ef3, type: 2}
   m_audioClip: {fileID: 8300000, guid: eb7f3714caffb444f91a0e1a7f235ab9, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0

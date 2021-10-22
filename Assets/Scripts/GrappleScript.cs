@@ -80,6 +80,8 @@ public class GrappleScript : MonoBehaviour
     /// </summary>
     void Update()
     {
+        GrappleCheck();
+
         if (Input.GetMouseButtonDown(0))
         {
             StartGrapple();
@@ -92,10 +94,7 @@ public class GrappleScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        canGrapple = Physics.Raycast(cam.position, cam.forward, out hit, maxDist, grappleSurface);
-
-        if (!canGrapple)
-            canGrapple = Physics.BoxCast(cam.position, Vector3.one * aimAssitMultiplier, cam.forward, out hit, Quaternion.Euler(45, 0, 0), maxDist, grappleSurface);
+        
 
         GrappleWithinRange();
     }
@@ -109,6 +108,14 @@ public class GrappleScript : MonoBehaviour
     }
 
     public GameObject inRange;
+
+    private void GrappleCheck()
+    {
+        canGrapple = Physics.Raycast(cam.position, cam.forward, out hit, maxDist, grappleSurface);
+
+        if (!canGrapple)
+            canGrapple = Physics.BoxCast(cam.position, Vector3.one * aimAssitMultiplier, cam.forward, out hit, Quaternion.Euler(45, 0, 0), maxDist, grappleSurface);
+    }
 
     void GrappleWithinRange()
     {
@@ -137,9 +144,12 @@ public class GrappleScript : MonoBehaviour
         // Not close enough
         else
         {
-            inRange.transform.localScale = Vector3.one/2;
-            crossColor.color = Color.red;
-            Destroy(grappleLocationSphere);
+            if (!isGrappling)
+            {
+                inRange.transform.localScale = Vector3.one / 2;
+                crossColor.color = Color.red;
+                Destroy(grappleLocationSphere);
+            }
         }
     }
 

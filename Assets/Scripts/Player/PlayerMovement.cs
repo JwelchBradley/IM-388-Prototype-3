@@ -51,7 +51,12 @@ public class PlayerMovement : MonoBehaviour
     [Range(100, 10000)]
     private float jumpForce = 300;
 
-    [Space]
+    [SerializeField]
+    [Tooltip("The rate at which gravity scales")]
+    [Range(-200, 0)]
+    private float gravity = -9.8f;
+
+    [Header("Grapple")]
     [SerializeField]
     [Tooltip("How fast the player can move while on the grapple")]
     [Range(0, 50)]
@@ -82,17 +87,12 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private float currentJumpForce = 3;
 
-    [SerializeField]
-    [Tooltip("The rate at which gravity scales")]
-    [Range(-200, 0)]
-    private float gravity = -9.8f;
-
     /// <summary>
     /// The current gravity being put onto the player.
     /// </summary>
     private float currentGravity = -9.8f;
 
-    [Space]
+    [Header("Ground Checks")]
     [SerializeField]
     [Tooltip("How far away the player must be from the ground to be grounded")]
     [Range(0, 2)]
@@ -158,6 +158,7 @@ public class PlayerMovement : MonoBehaviour
         GetCameras();
     }
 
+    #region Cameras
     /// <summary>
     /// Gets all player cameras and components.
     /// </summary>
@@ -168,7 +169,16 @@ public class PlayerMovement : MonoBehaviour
         walkCamPOV = walkCam.GetCinemachineComponent<CinemachinePOV>();
         crouchCam = GameObject.Find("Crouch vcam").GetComponent<CinemachineVirtualCamera>();
         crouchCamPOV = crouchCam.GetCinemachineComponent<CinemachinePOV>();
+
+        SetCameraSens();
     }
+
+    private void SetCameraSens()
+    {
+        walkCamPOV.m_HorizontalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens");
+        walkCamPOV.m_VerticalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens");
+    }
+    #endregion
     #endregion
 
     #region Input Calls
@@ -329,7 +339,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private float threshold = 0.01f;
-    public float counterMovement = 0.175f;
+    private float counterMovement = 0.175f;
     private void CounterMovement(SpringJoint sj)
     {
         if (!isGrounded || isJumping || sj != null) return;
@@ -416,6 +426,7 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
 
+    [Header("Death")]
     [SerializeField]
     private float waitToRestart = 1;
     [SerializeField]
