@@ -378,14 +378,14 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Collisions
-    private void OnCollisionEnter(Collision other)
+    /*private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Hazard") && notDead)
         {
             notDead = false;
             StartCoroutine(Restart());
         }
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
@@ -393,6 +393,20 @@ public class PlayerMovement : MonoBehaviour
         {
             notDead = false;
             LoadWinScreen();
+        }
+
+        if (other.gameObject.CompareTag("Hazard") && notDead)
+        {
+            notDead = false;
+            StartCoroutine(DeathCount(3.0f));
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Hazard") && !notDead)
+        {
+            notDead = true;
         }
     }
 
@@ -423,6 +437,15 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource aud;
     private Animator anim;
     private bool notDead = true;
+
+    private IEnumerator DeathCount(float waitTime)
+    {
+        while(!notDead)
+        {
+            yield return new WaitForSeconds(waitTime);
+            StartCoroutine(Restart());
+        }
+    }
     private IEnumerator Restart()
     {
         aud = GetComponent<AudioSource>();
