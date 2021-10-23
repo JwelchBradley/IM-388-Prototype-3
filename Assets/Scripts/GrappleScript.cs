@@ -20,6 +20,8 @@ public class GrappleScript : MonoBehaviour
     [Tooltip("Camera and player.")]
     public Transform cam, player;
 
+    private PlayerMovement pm;
+
     #region Grapple Values
     [Header("Grapple values")]
     [Tooltip("How far player can shoot grapple.")]
@@ -52,6 +54,12 @@ public class GrappleScript : MonoBehaviour
     [Tooltip("Controls the size of the sphere")]
     [Range(0, 50)]
     private float sphereSizeMod = 10;
+
+    [Header("Pull Towards")]
+    [SerializeField]
+    [Tooltip("How fast the player pulls themself towards an object beneath them")]
+    [Range(0, 300)]
+    private float pullTowardsSpeed = 100;
     #endregion
 
     public GameObject ropeLeftBehind;
@@ -73,6 +81,7 @@ public class GrappleScript : MonoBehaviour
     /// </summary>
     public void Start()
     {
+        pm = player.GetComponent<PlayerMovement>();
         lineR = GetComponent<LineRenderer>();
         crossColor = inRange.GetComponent<Image>();
     }
@@ -82,16 +91,34 @@ public class GrappleScript : MonoBehaviour
     /// </summary>
     void Update()
     {
-        GrappleCheck();
-
-        GrappleWithinRange();
-
-        if (Input.GetMouseButtonDown(0))
+        if (pm.NotDead)
         {
-            StartGrapple();
+            GrappleCheck();
+
+            GrappleWithinRange();
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                StartGrapple();
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                StopGrapple();
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                PullTowards();
+            }
+            else if (Input.GetMouseButtonUp(1))
+            {
+                //StopGrapple();
+            }
         }
-        else if(Input.GetMouseButtonUp(0))
-        { 
+        else
+        {
+            canGrapple = false;
+            GrappleWithinRange();
             StopGrapple();
         }
     }
@@ -104,14 +131,18 @@ public class GrappleScript : MonoBehaviour
         DrawRope();
     }
 
+    #region Grapple Normal
     public GameObject inRange;
 
     private void GrappleCheck()
     {
-        canGrapple = Physics.Raycast(cam.position, cam.forward, out hit, maxDist, grappleSurface);
+        if (!isGrappling)
+        {
+            canGrapple = Physics.Raycast(cam.position, cam.forward, out hit, maxDist, grappleSurface);
 
-        if (!canGrapple)
-            canGrapple = Physics.BoxCast(cam.position, Vector3.one * aimAssitMultiplier, cam.forward, out hit, Quaternion.Euler(45, 0, 0), maxDist, grappleSurface);
+            if (!canGrapple)
+                canGrapple = Physics.BoxCast(cam.position, Vector3.one * aimAssitMultiplier, cam.forward, out hit, Quaternion.Euler(45, 0, 0), maxDist, grappleSurface);
+        }
     }
 
     void GrappleWithinRange()
@@ -189,7 +220,8 @@ public class GrappleScript : MonoBehaviour
     /// </summary>
     void DrawRope()
     {
-        if (!joint) return;
+        //if (!joint) return;
+        if (!isGrappling) return;
 
         lineR.positionCount = 2;
         lineR.SetPosition(0, gunTip.position);
@@ -227,5 +259,43 @@ public class GrappleScript : MonoBehaviour
         lineR.positionCount = 0;
         Destroy(joint);
     }
+    #endregion
 
+    #region Grapple Pull Towards
+    private void PullTowards()
+    {
+        if (canGrapple && !isGrappling)
+        {
+            StartCoroutine(StartPull());
+        }
+    }
+
+    private IEnumerator StartPull()
+    {
+        if (Time.timeScale != 0)
+        {
+            if (canGrapple && hit.point.y < transform.position.y)
+            {
+
+                isGrappling = true;
+
+                grapplePoint = hit.point;
+
+                while (Vector3.Distance(hit.point, transform.position)>5)
+                {
+                    pm.RB.velocity = (hit.point - transform.position).normalized * pullTowardsSpeed;
+                    yield return new WaitForFixedUpdate();
+                }
+
+                lineR.positionCount = 0;
+                isGrappling = false;
+
+                /*
+                // Create positions for joint
+                grapplePoint = hit.point;
+                player.GetComponent<Rigidbody>().AddForce((hit.point - transform.position).normalized*Vector3.Distance(hit.point, transform.position)*10);*/
+            }
+        }
+    }
+    #endregion
 }

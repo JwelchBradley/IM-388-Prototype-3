@@ -305,6 +305,7 @@ MonoBehaviour:
   aimAssitMultiplier: 5
   sphereSizeMod: 10
   ropeLeftBehind: {fileID: 0}
+  objectShotAt: {fileID: 0}
   inRange: {fileID: 0}
 --- !u!1 &2810701359487607132
 GameObject:
@@ -511,7 +512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkForce: 100
-  maxWalkVelocity: 10
+  maxWalkVelocity: 20
   jumpForce: 1000
   gravity: -20
   grappleMaxVelocity: 20
@@ -667,6 +668,7 @@ MonoBehaviour:
   aimAssitMultiplier: 7.5
   sphereSizeMod: 10
   ropeLeftBehind: {fileID: 0}
+  objectShotAt: {fileID: 0}
   inRange: {fileID: 0}
 --- !u!82 &5111010940040262766
 AudioSource:
@@ -777,7 +779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectRB: {fileID: 337304346038413043}
-  minWooshSpeed: 20
+  minWooshSpeed: 30
 --- !u!95 &1099290134
 Animator:
   serializedVersion: 3

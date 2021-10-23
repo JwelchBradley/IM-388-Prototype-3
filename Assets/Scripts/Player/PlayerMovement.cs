@@ -42,6 +42,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 move = Vector3.zero;
 
     private Rigidbody rb;
+
+    public Rigidbody RB
+    {
+        get => rb;
+    }
     #endregion
 
     #region Air Movement
@@ -137,9 +142,9 @@ public class PlayerMovement : MonoBehaviour
     /// The CinemachinePOV of the crouch camera.
     /// </summary>
     private CinemachinePOV crouchCamPOV;
-
-    public GameObject SludgeOverlay;
     #endregion
+
+    private GameObject sludgeOverlay;
     #endregion
 
     #region Functions
@@ -157,7 +162,9 @@ public class PlayerMovement : MonoBehaviour
         //controller = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
 
-        SludgeOverlay.SetActive(false);
+        sludgeOverlay = GameObject.Find("SludgeOverlay");
+
+        sludgeOverlay.SetActive(false);
 
         GetCameras();
     }
@@ -372,6 +379,16 @@ public class PlayerMovement : MonoBehaviour
             forward.y = 0;
             rb.AddForce(walkForce * forward * -mag.y * counterMovement);
         }
+
+        if(rb.velocity.magnitude > maxWalkVelocity)
+        {
+            rb.velocity *= 0.98f;
+        }
+    }
+
+    private void LimitGroundVelocity()
+    {
+
     }
 
     /// <summary>
@@ -407,6 +424,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }*/
 
+    bool inAcid = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Win") && notDead)
@@ -417,18 +435,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.gameObject.CompareTag("Hazard") && notDead)
         {
-            notDead = false;
-            SludgeOverlay.SetActive(true);
+            inAcid = true;
+            sludgeOverlay.SetActive(true);
             StartCoroutine(DeathCount(3.0f));
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Hazard") && !notDead)
+        if (other.gameObject.CompareTag("Hazard"))
         {
-            notDead = true;
-            SludgeOverlay.SetActive(false);
+            inAcid = false;
+            sludgeOverlay.SetActive(false);
         }
     }
 
@@ -461,15 +479,21 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     private bool notDead = true;
 
+    public bool NotDead
+    {
+        get => notDead;
+    }
+
     private IEnumerator DeathCount(float waitTime)
     {
-        while(!notDead)
+        while(inAcid)
         {
             yield return new WaitForFixedUpdate();
             waitTime -= Time.fixedDeltaTime;
 
             if(waitTime < 0)
             {
+                notDead = false;
                 StartCoroutine(Restart());
                 break;
             }
