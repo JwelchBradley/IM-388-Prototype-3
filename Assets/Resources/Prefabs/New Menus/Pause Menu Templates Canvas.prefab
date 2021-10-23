@@ -920,6 +920,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  InitializeAudioVolume:
+  - MasterVolume
+  - MusicVolume
+  - SFXVolume
+  - UIVolume
+  audioMixer: {fileID: 24100000, guid: 665224352e6e1b04f95e9d1f565b2ef3, type: 2}
   menuPanels:
   - {fileID: 0}
   - {fileID: 2470596706751603429}

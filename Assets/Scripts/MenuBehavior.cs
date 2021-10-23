@@ -8,6 +8,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class MenuBehavior : MonoBehaviour
@@ -25,9 +26,36 @@ public class MenuBehavior : MonoBehaviour
     [Tooltip("The panels for the settings screen")]
     [SerializeField]
     private List<GameObject> settingsScreens = new List<GameObject>();
+
+    [SerializeField]
+    [Tooltip("The playerpref names of volume controls")]
+    protected string[] InitializeAudioVolume;
+
+    [SerializeField]
+    [Tooltip("The master audio mixer")]
+    protected AudioMixer audioMixer;
     #endregion
 
     #region Functions
+    private void Start()
+    {
+        InitalizeVolume();
+    }
+
+    protected void InitalizeVolume()
+    {
+        foreach(string s in InitializeAudioVolume)
+        {
+            if (PlayerPrefs.HasKey(s))
+            {
+                // Converts linear slider value to exponential Audio Group value
+                float vol = Mathf.Log10(PlayerPrefs.GetFloat(s)) * 20;
+
+                audioMixer.SetFloat(s, vol);
+            }
+        }
+    }
+
     /// <summary>
     /// Sets a panel to be active.
     /// </summary>

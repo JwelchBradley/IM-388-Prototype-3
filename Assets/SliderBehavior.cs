@@ -176,6 +176,10 @@ public class SliderBehavior : MonoBehaviour
                 value = 0;
             }
 
+            value *= 100;
+            value = (int) value;
+            value /= 100;
+
             inputField.text = value.ToString();
         }
     }
