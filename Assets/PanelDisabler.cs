@@ -17,7 +17,7 @@ public class PanelDisabler : MonoBehaviour
 
         if (pause != null)
         {
-            pauseMenu = GetComponent<PauseMenuBehavior>();
+            pauseMenu = pause.GetComponent<PauseMenuBehavior>();
         }
     }
 
