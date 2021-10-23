@@ -10,12 +10,18 @@ public class RingPoints : MonoBehaviour
 
     private float points = 0;
 
+    MeshRenderer mr;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player"))
         {
             points += 1f;
             score.text = "Points: " + points;
+
+            mr = GetComponent<MeshRenderer>();
+            
+
         }
     }
 
