@@ -179,6 +179,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetCameraSens()
     {
+        if(!PlayerPrefs.HasKey("X Sens"))
+        {
+            PlayerPrefs.SetFloat("X Sens", 600);
+            PlayerPrefs.SetFloat("Y Sens", 400);
+        }
+
         walkCamPOV.m_HorizontalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens");
         walkCamPOV.m_VerticalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens");
     }
@@ -473,7 +479,7 @@ public class PlayerMovement : MonoBehaviour
     {
         aud = GetComponent<AudioSource>();
         aud.PlayOneShot(deathSound, 1);
-        AudioSource.PlayClipAtPoint(deathSound, transform.position);
+        //AudioSource.PlayClipAtPoint(deathSound, transform.position);
 
         anim = GetComponent<Animator>();
         //anim.SetBool("isDead", true);

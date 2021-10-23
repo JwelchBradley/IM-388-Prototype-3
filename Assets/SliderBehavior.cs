@@ -62,7 +62,7 @@ public class SliderBehavior : MonoBehaviour
     /// <summary>
     /// Before the first frame is sets the slider or creates a playerpref.
     /// </summary>
-    void Start()
+    void Awake()
     {
         InitializePlayerPrefs();
 

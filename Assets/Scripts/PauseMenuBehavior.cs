@@ -25,6 +25,8 @@ public class PauseMenuBehavior : MenuBehavior
     /// </summary>
     private bool canPause = false;
 
+    private bool canClosePauseMenu = true;
+
     /// <summary>
     /// 
     /// </summary>
@@ -70,7 +72,7 @@ public class PauseMenuBehavior : MenuBehavior
     public void PauseGame()
     {
         // Opens pause menu and pauses the game
-        if (canPause)
+        if (canPause && canClosePauseMenu)
         {
             if (isPaused)
             {
@@ -91,6 +93,11 @@ public class PauseMenuBehavior : MenuBehavior
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
+    }
+
+    public void CanClosePauseMenu(bool canClose)
+    {
+        canClosePauseMenu = canClose;
     }
 
     /// <summary>

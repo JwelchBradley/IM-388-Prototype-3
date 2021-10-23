@@ -84,6 +84,8 @@ public class GrappleScript : MonoBehaviour
     {
         GrappleCheck();
 
+        GrappleWithinRange();
+
         if (Input.GetMouseButtonDown(0))
         {
             StartGrapple();
@@ -92,13 +94,6 @@ public class GrappleScript : MonoBehaviour
         { 
             StopGrapple();
         }
-    }
-
-    private void FixedUpdate()
-    {
-        
-
-        GrappleWithinRange();
     }
 
     /// <summary>

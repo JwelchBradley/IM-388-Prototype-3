@@ -9,10 +9,27 @@ using UnityEngine;
 
 public class PanelDisabler : MonoBehaviour
 {
-    private void FixedUpdate()
+    PauseMenuBehavior pauseMenu;
+
+    private void Awake()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        GameObject pause = GameObject.Find("Pause Menu Templates Canvas");
+
+        if (pause != null)
         {
+            pauseMenu = GetComponent<PauseMenuBehavior>();
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(pauseMenu != null)
+            {
+                pauseMenu.CanClosePauseMenu(true);
+            }
+
             gameObject.SetActive(false);
         }
     }

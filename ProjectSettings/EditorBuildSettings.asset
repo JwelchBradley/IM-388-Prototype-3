@@ -9,10 +9,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 35fea0dde09942c478eb2b7cbac2f8ad
   - enabled: 1
-    path: Assets/Scenes/ConnorScene.unity
-    guid: 0b9728561b35c454cbd038b29c0a88db
-  - enabled: 1
     path: Assets/Scenes/Playground.unity
     guid: 9dc285581a55a164f9dc1006e2aab99d
+  - enabled: 1
+    path: Assets/Scenes/ConnorScene.unity
+    guid: 0b9728561b35c454cbd038b29c0a88db
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 31604ae8661a1734793ea1fb2e46b248, type: 2}
