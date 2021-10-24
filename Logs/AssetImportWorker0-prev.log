@@ -552,3 +552,4 @@ Received Import Request.
 Start importing Assets/Connor'sTestStuff/OldMetal.mat using Guid(284b3ff19a51a9640bb2eb0a1a0f73b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '01e7a1f0ca03ff07de2780bc95bd0b8f') in 0.020985 seconds 
   Import took 0.032337 seconds .
 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
