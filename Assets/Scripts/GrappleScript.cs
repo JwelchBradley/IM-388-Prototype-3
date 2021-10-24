@@ -165,7 +165,7 @@ public class GrappleScript : MonoBehaviour
             else
             {
                 grappleLocationSphere.transform.position = hit.point;
-                grappleLocationSphere.transform.localScale = Vector3.one * hit.distance*(sphereSizeMod/100);
+                grappleLocationSphere.transform.localScale = Vector3.one * Vector3.Distance(hit.point, cam.transform.position)*(sphereSizeMod/100);
             }
             
         }
