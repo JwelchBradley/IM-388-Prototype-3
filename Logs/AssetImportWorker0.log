@@ -275,6 +275,7 @@ Received Import Request.
 Start importing Assets/Resources/Prefabs/Objectives/Pipe.prefab using Guid(12e36432aa87e19439ff259aa0cc73d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b27e1b3120959444e268137f060a2598') in 0.054467 seconds 
   Import took 0.063384 seconds .
 
+<<<<<<< Updated upstream
 ========================================================================
 Received Import Request.
   Time since last request: 2.539436 seconds.
@@ -711,4 +712,6 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+=======
+>>>>>>> Stashed changes
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
