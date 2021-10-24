@@ -5,22 +5,26 @@ using UnityEngine.UI;
 
 public class RingPoints : MonoBehaviour
 {
-
-    public Text score;
-
-    private float points = 0;
-
     MeshRenderer mr;
+    public Material green;
+
+    public GameObject doors;
+    bool oneTime = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            points += 1f;
-            score.text = "Points: " + points;
+
+            if (!oneTime)
+            {
+                doors.GetComponent<DoorControl>().currentUnLocks += 1;
+            }
 
             mr = GetComponent<MeshRenderer>();
-            
+            mr.material = green;
+
+            oneTime = true;
 
         }
     }
