@@ -80,12 +80,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float grappleGravity = -100f;
 
-    /*
+    [Header("Exit Grapple")]
     [SerializeField]
-    [Tooltip("How much velocity the player has when jumping")]
-    [Range(100, 3000)]
-    private float crouchJumpForce = 200;
-    */
+    private float exitingGrappleSpeedTime = 1;
+
+    [SerializeField]
+    [Tooltip("The max speed player can go to out of grappling")]
+    private float maxExitGrappleSpeed = 80;
+
+    private float fowardExitGrappleMovementMultiplier = 2;
+
+    private float sidewaysExitGrappleMovementMulitplier = 1.5f;
+
+    private float exitGrappleTime;
+
+    private bool exitingGrapple = false;
+
+    [HideInInspector]
+    public bool isGrappling = false;
 
     /// <summary>
     /// The height the player currently jumps to.
@@ -253,13 +265,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private float exitGrappleMagnitude = 0;
     /// <summary>
     /// Moves the player.
     /// </summary>
     private void MovePlayer()
     {
-        SpringJoint sj = GetComponent<SpringJoint>();
-        CounterMovement(sj);
+        CounterMovement();
 
         //Some multipliers
         float multiplier = 1f, multiplierZ = 1f;
@@ -280,18 +292,24 @@ public class PlayerMovement : MonoBehaviour
         Vector2 mag = FindVelRelativeToLook();
         float xMag = mag.x, yMag = mag.y;
 
-        if(sj == null)
+        if(!isGrappling)
         {
             currentGravity = gravity;
         }
 
-        if(sj != null)
+        #region movement limiters
+        #region Grappling
+        if (isGrappling)
         {
             currentGravity = grappleGravity;
             multiplier = forwardGrappleMovementMultiplier;
             multiplierZ = sidewaysGrappleMovementMultiplier;
 
-            if(currentMove.x == 0 || currentMove.z == 0)
+            exitGrappleTime = exitingGrappleSpeedTime;
+            exitingGrapple = true;
+            exitGrappleMagnitude = rb.velocity.magnitude;
+
+            if (currentMove.x == 0 || currentMove.z == 0)
             {
                 //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
                 if (currentMove.x > 0 && xMag > grappleMaxVelocity) currentMove.x = 0;
@@ -303,15 +321,57 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
-                if (currentMove.x > 0 && xMag > currentMaxVelocity * .8f) currentMove.x = 0;
-                if (currentMove.x < 0 && xMag < -currentMaxVelocity * .8f) currentMove.x = 0;
+                if (currentMove.x > 0 && xMag > grappleMaxVelocity * .5f) currentMove.x = 0;
+                if (currentMove.x < 0 && xMag < -grappleMaxVelocity * .5f) currentMove.x = 0;
 
-                if (currentMove.z > 0 && yMag > currentMaxVelocity * .8f) currentMove.z = 0;
-                if (currentMove.z < 0 && yMag < -currentMaxVelocity * .8f) currentMove.z = 0;
+                if (currentMove.z > 0 && yMag > grappleMaxVelocity * .5f) currentMove.z = 0;
+                if (currentMove.z < 0 && yMag < -grappleMaxVelocity * .5f) currentMove.z = 0;
             }
-
         }
-        else if((currentMove.x == 0 || currentMove.z == 0) && !(currentMove.x == 0 && currentMove.z == 0))
+        #endregion
+
+        #region exit grapple
+        else if (exitingGrapple)
+        {
+            multiplier = fowardExitGrappleMovementMultiplier;
+            multiplierZ = sidewaysExitGrappleMovementMulitplier;
+            if (isGrounded || exitGrappleTime < 0)
+            {
+                exitingGrapple = false;
+            }
+            else
+            {
+                exitGrappleTime -= Time.fixedDeltaTime;
+
+                if(exitGrappleMagnitude > maxExitGrappleSpeed)
+                {
+                    exitGrappleMagnitude = maxExitGrappleSpeed;
+                }
+
+                if (currentMove.x == 0 || currentMove.z == 0)
+                {
+                    //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
+                    if (currentMove.x > 0 && xMag > exitGrappleMagnitude) currentMove.x = 0;
+                    if (currentMove.x < 0 && xMag < -exitGrappleMagnitude) currentMove.x = 0;
+
+                    if (currentMove.z > 0 && yMag > exitGrappleMagnitude) currentMove.z = 0;
+                    if (currentMove.z < 0 && yMag < -exitGrappleMagnitude) currentMove.z = 0;
+                }
+                else
+                {
+                    //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
+                    if (currentMove.x > 0 && xMag > exitGrappleMagnitude * .5f) currentMove.x = 0;
+                    if (currentMove.x < 0 && xMag < -exitGrappleMagnitude * .5f) currentMove.x = 0;
+
+                    if (currentMove.z > 0 && yMag > exitGrappleMagnitude * .5f) currentMove.z = 0;
+                    if (currentMove.z < 0 && yMag < -exitGrappleMagnitude * .5f) currentMove.z = 0;
+                }
+            }
+        }
+        #endregion
+
+        #region Only One Key
+        else if ((currentMove.x == 0 || currentMove.z == 0) && !(currentMove.x == 0 && currentMove.z == 0))
         {
             //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
             if (currentMove.x > 0 && xMag > currentMaxVelocity) currentMove.x = 0;
@@ -320,6 +380,9 @@ public class PlayerMovement : MonoBehaviour
             if (currentMove.z > 0 && yMag > currentMaxVelocity) currentMove.z = 0;
             if (currentMove.z < 0 && yMag < -currentMaxVelocity) currentMove.z = 0;
         }
+        #endregion
+
+        #region In Air
         else if (!isGrounded)
         {
             //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
@@ -329,6 +392,9 @@ public class PlayerMovement : MonoBehaviour
             if (currentMove.z > 0 && yMag > currentMaxVelocity*.5f) currentMove.z = 0;
             if (currentMove.z < 0 && yMag < -currentMaxVelocity*.5f) currentMove.z = 0;
         }
+        #endregion
+
+        #region Both Keys
         else
         {
             if (rb.velocity.magnitude > currentMaxVelocity || rb.velocity.magnitude < -currentMaxVelocity)
@@ -340,10 +406,12 @@ public class PlayerMovement : MonoBehaviour
                 if (currentMove.z < 0 && yMag < -currentMaxVelocity/2) currentMove.z = 0;
             }
         }
+        #endregion
+        #endregion
 
         // Provides less movement when in the air and sliding
         currentMove.x *= multiplier;
-        currentMove.z *= multiplier * multiplierZ;
+        currentMove.z *= multiplierZ;
 
         //Apply forces to move player
         Vector3 forward = cameraTransform.forward;
@@ -357,9 +425,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float threshold = 0.01f;
     private float counterMovement = 0.175f;
-    private void CounterMovement(SpringJoint sj)
+    private void CounterMovement()
     {
-        if (!isGrounded || isJumping || sj != null) return;
+        if (!isGrounded || isJumping || isGrappling) return;
 
         Vector2 mag = FindVelRelativeToLook();
 

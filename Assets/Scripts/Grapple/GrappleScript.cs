@@ -7,8 +7,13 @@ using UnityEngine.UI;
 
 public class GrappleScript : MonoBehaviour
 {
-    private LineRenderer lineR;
+    //private LineRenderer lineR;
     private Vector3 grapplePoint;
+    public Vector3 GrapplePoint
+    {
+        get => grapplePoint;
+    }
+
     private SpringJoint joint;
 
     [Tooltip("Layer player can grapple on.")]
@@ -68,6 +73,11 @@ public class GrappleScript : MonoBehaviour
 
     private bool isGrappling;
 
+    public bool IsGrappling
+    {
+        get => isGrappling;
+    }
+
     private RaycastHit hit;
 
     private Image crossColor;
@@ -82,7 +92,7 @@ public class GrappleScript : MonoBehaviour
     public void Start()
     {
         pm = player.GetComponent<PlayerMovement>();
-        lineR = GetComponent<LineRenderer>();
+        //lineR = GetComponent<LineRenderer>();
         crossColor = inRange.GetComponent<Image>();
     }
 
@@ -123,13 +133,14 @@ public class GrappleScript : MonoBehaviour
         }
     }
 
+    /*
     /// <summary>
     /// Causes less jitter... hopefully
     /// </summary>
     private void LateUpdate()
     {
         DrawRope();
-    }
+    }*/
 
     #region Grapple Normal
     public GameObject inRange;
@@ -157,8 +168,7 @@ public class GrappleScript : MonoBehaviour
             {
                 grappleLocationSphere = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Grapple/Sphere", typeof(GameObject)));
             }
-
-            if (isGrappling)
+            else if (isGrappling && grappleLocationSphere != null)
             {
                 Destroy(grappleLocationSphere);
             }
@@ -167,7 +177,6 @@ public class GrappleScript : MonoBehaviour
                 grappleLocationSphere.transform.position = hit.point;
                 grappleLocationSphere.transform.localScale = Vector3.one * Vector3.Distance(hit.point, cam.transform.position)*(sphereSizeMod/100);
             }
-            
         }
         // Not close enough
         else
@@ -191,6 +200,7 @@ public class GrappleScript : MonoBehaviour
             if (canGrapple)
             {
                 isGrappling = true;
+                pm.isGrappling = true;
 
                 // Create positions for joint
                 grapplePoint = hit.point;
@@ -214,6 +224,7 @@ public class GrappleScript : MonoBehaviour
         }
     }
 
+    /*
     /// <summary>
     /// Creates the rope with 2 points
     /// Delete rope if no joint found
@@ -227,7 +238,7 @@ public class GrappleScript : MonoBehaviour
         lineR.SetPosition(0, gunTip.position);
         lineR.SetPosition(1, grapplePoint);
 
-    }
+    }*/
 
     /// <summary>
     /// Remove Grapple
@@ -235,6 +246,7 @@ public class GrappleScript : MonoBehaviour
     void StopGrapple()
     {
         isGrappling = false;
+        pm.isGrappling = false;
 
         if (ropeLeftBehind != null)
         {
@@ -253,10 +265,9 @@ public class GrappleScript : MonoBehaviour
             sj.massScale = massScaleJoint;
 
             Instantiate(ropeLeftBehind, transform.position, transform.rotation);
-            //
         }
 
-        lineR.positionCount = 0;
+        //lineR.positionCount = 0;
         Destroy(joint);
     }
     #endregion
@@ -278,6 +289,7 @@ public class GrappleScript : MonoBehaviour
             {
 
                 isGrappling = true;
+                pm.isGrappling = true;
 
                 grapplePoint = hit.point;
 
@@ -287,8 +299,9 @@ public class GrappleScript : MonoBehaviour
                     yield return new WaitForFixedUpdate();
                 }
 
-                lineR.positionCount = 0;
+                //lineR.positionCount = 0;
                 isGrappling = false;
+                pm.isGrappling = false;
 
                 /*
                 // Create positions for joint

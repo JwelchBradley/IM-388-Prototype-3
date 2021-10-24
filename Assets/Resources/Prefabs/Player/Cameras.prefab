@@ -364,7 +364,7 @@ MonoBehaviour:
     m_InputAxisValue: -0.4
     m_InvertInput: 1
     m_MinValue: -75
-    m_MaxValue: 75
+    m_MaxValue: 90
     m_Wrap: 0
     m_Recentering:
       m_enabled: 0
@@ -431,7 +431,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1119962704133113636}
   m_LocalRotation: {x: -0, y: -0.7134339, z: -0, w: 0.7007225}
-  m_LocalPosition: {x: 52.350445, y: 18.388124, z: 39.919147}
+  m_LocalPosition: {x: 52.350445, y: -3.3700008, z: 39.919147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1119962703272694537}
