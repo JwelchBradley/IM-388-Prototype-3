@@ -88,8 +88,18 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("The max speed player can go to out of grappling")]
     private float maxExitGrappleSpeed = 80;
 
-    private float fowardExitGrappleMovementMultiplier = 2;
+    [SerializeField]
+    private float exitGrappleExtraGravityTime = 2;
 
+    [SerializeField]
+    private float exitGrappleGravity = -60;
+
+    private float exitGrappleGravityTime;
+
+    [SerializeField]
+    private float fowardExitGrappleMovementMultiplier = 1.2f;
+
+    [SerializeField]
     private float sidewaysExitGrappleMovementMulitplier = 1.5f;
 
     private float exitGrappleTime;
@@ -270,6 +280,11 @@ public class PlayerMovement : MonoBehaviour
         if (!isGrounded)
         {
             rb.AddForce(new Vector3(0, currentGravity, 0), ForceMode.Acceleration);
+
+            if(exitGrappleGravity == currentGravity && rb.velocity.y < -20)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, -20, rb.velocity.z);
+            }
         }
     }
 
@@ -314,6 +329,7 @@ public class PlayerMovement : MonoBehaviour
             multiplierZ = sidewaysGrappleMovementMultiplier;
 
             exitGrappleTime = exitingGrappleSpeedTime;
+            exitGrappleGravityTime = exitGrappleExtraGravityTime;
             exitingGrapple = true;
             exitGrappleMagnitude = rb.velocity.magnitude;
 
@@ -343,17 +359,27 @@ public class PlayerMovement : MonoBehaviour
         {
             multiplier = fowardExitGrappleMovementMultiplier;
             multiplierZ = sidewaysExitGrappleMovementMulitplier;
-            if (isGrounded || exitGrappleTime < 0)
+            if (isGrounded || (exitGrappleTime < 0 && exitGrappleGravityTime < 0))
             {
                 exitingGrapple = false;
             }
             else
             {
                 exitGrappleTime -= Time.fixedDeltaTime;
+                exitGrappleGravityTime -= Time.fixedDeltaTime;
 
                 if(exitGrappleMagnitude > maxExitGrappleSpeed)
                 {
                     exitGrappleMagnitude = maxExitGrappleSpeed;
+                }
+                
+                if(exitGrappleGravityTime > 0 && rb.velocity.y > 0)
+                {
+                    currentGravity = exitGrappleGravity;
+                }
+                else
+                {
+                    currentGravity = gravity;
                 }
 
                 if (currentMove.x == 0 || currentMove.z == 0)
