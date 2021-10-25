@@ -59224,6 +59224,10 @@ PrefabInstance:
       propertyPath: inRange
       value: 
       objectReference: {fileID: 1738763280}
+    - target: {fileID: 337304346038413043, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
+      propertyPath: m_Mass
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4345530903205053621, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
       propertyPath: m_RootOrder
       value: 6
