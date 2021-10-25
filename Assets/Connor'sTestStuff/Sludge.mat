@@ -8,14 +8,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Sludge
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: e5bd53d8c13fcaf4981387d5aa3aef97, type: 3}
   m_ShaderKeywords: _ALPHATEST_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses:
   - SHADOWCASTER
   m_SavedProperties:
@@ -78,6 +77,17 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_01ad73fb6ddd486589340ccfdaddefee: 0
+    - Vector1_05eef2dd711e48ecbd59f59a2327a171: 1
+    - Vector1_15e4da8573b64165b5765850d84f894c: 0.7
+    - Vector1_2ac3789a13bf4026a229bb42a15ea51b: 0
+    - Vector1_5a940860febf4b5fa247369f064eaba5: 0.5
+    - Vector1_887f28f3d7ea45b2afdb800cf613e4e5: 10
+    - Vector1_902858ba448b4721bf7947eefbdc3ba5: 0.02
+    - Vector1_b88caea22f294e32a14ba81d289455f5: 1
+    - Vector1_b8b628131b0c4fb8917ef567c89ad3a5: 0.1
+    - Vector1_c058a0b017234739b74f8ba5480596a7: 0.75
+    - Vector1_fb514d7bf23a4bdaa6bcfafc2d918923: 0.2
     - _AlphaClip: 1
     - _Blend: 0
     - _BumpScale: 1
@@ -105,6 +115,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
+    - Color_9d85651f8c5347d19fc0ac43c8a42141: {r: 0.1792266, g: 0.7830189, b: 0.1735938, a: 0}
+    - Color_f2d67388d480426bbc20bb96115bfff3: {r: 0.05032931, g: 0.2735849, b: 0.06500312, a: 0}
     - _BaseColor: {r: 0.35953057, g: 0.41509432, b: 0.17386968, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
