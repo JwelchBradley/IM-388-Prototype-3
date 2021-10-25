@@ -102,6 +102,15 @@ public class GrappleScript : MonoBehaviour
 
     public GameObject objectShotAt;
 
+    [Header("Audio")]
+    [SerializeField]
+    [Tooltip("The audio clip played when first grappling")]
+    private AudioClip grappleStart;
+
+    [SerializeField]
+    [Tooltip("The audio clip played when ending grappling")]
+    private AudioClip grappleEnd;
+
     /// <summary>
     /// Asign variables
     /// </summary>
@@ -134,15 +143,18 @@ public class GrappleScript : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 StartGrapple();
+                //PlayAudio(grappleStart);
             }
             else if (Input.GetMouseButtonUp(0))
             {
                 StopGrapple();
+                //PlayAudio(grappleEnd);
             }
 
             if (Input.GetMouseButtonDown(1))
             {
                 PullTowards();
+                //PlayAudio(grappleStart);
             }
             else if (Input.GetMouseButtonUp(1))
             {
@@ -311,6 +323,13 @@ public class GrappleScript : MonoBehaviour
     }
     #endregion
 
+    #region Grapple Sound
+    private void PlayAudio(AudioClip clip)
+    {
+        pm.ExtraAudioSource.PlayOneShot(clip);
+    }
+    #endregion
+
     #region Grapple Pull Towards
     private void PullTowards()
     {
@@ -352,7 +371,9 @@ public class GrappleScript : MonoBehaviour
 
     private bool CheckIfBeneath()
     {
-        return canGrapple && hit.point.y < transform.position.y;
+        Vector3 center = GetComponent<CapsuleCollider>().center;
+        Vector3 bottom = transform.position - GetComponent<CapsuleCollider>().bounds.extents;
+        return canGrapple && hit.point.y < bottom.y;
     }
     #endregion
 }

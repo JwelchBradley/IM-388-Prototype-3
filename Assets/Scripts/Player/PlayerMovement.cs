@@ -157,6 +157,14 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     private GameObject sludgeOverlay;
+
+    [SerializeField]
+    private AudioSource extraAudioSource;
+
+    public AudioSource ExtraAudioSource
+    {
+        get => extraAudioSource;
+    }
     #endregion
 
     #region Functions
@@ -569,8 +577,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private IEnumerator Restart()
     {
-        aud = GetComponent<AudioSource>();
-        aud.PlayOneShot(deathSound, 1);
+        //aud = GetComponent<AudioSource>();
+        extraAudioSource.PlayOneShot(deathSound, 1);
         //AudioSource.PlayClipAtPoint(deathSound, transform.position);
 
         anim = GetComponent<Animator>();
