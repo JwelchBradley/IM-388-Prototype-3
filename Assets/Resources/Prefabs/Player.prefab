@@ -292,9 +292,6 @@ MonoBehaviour:
   grappleSurface:
     serializedVersion: 2
     m_Bits: 64
-  gunTip: {fileID: 7162027085329825427}
-  cam: {fileID: 6515905149919152226}
-  player: {fileID: 4345530903205053621}
   maxDist: 1000
   maxJointDist: 0
   minJointDist: 0
@@ -306,8 +303,9 @@ MonoBehaviour:
   sphereSizeMod: 10
   pullTowardsSpeed: 100
   ropeLeftBehind: {fileID: 0}
+  defaultSphereMaterial: {fileID: 0}
+  beneathSphereMaterial: {fileID: 0}
   objectShotAt: {fileID: 0}
-  inRange: {fileID: 0}
 --- !u!1 &2810701359487607132
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,9 +658,6 @@ MonoBehaviour:
   grappleSurface:
     serializedVersion: 2
     m_Bits: 64
-  gunTip: {fileID: 0}
-  cam: {fileID: 0}
-  player: {fileID: 4345530903205053621}
   maxDist: 90
   maxJointDist: 0.3
   minJointDist: 0.3
@@ -674,8 +669,9 @@ MonoBehaviour:
   sphereSizeMod: 10
   pullTowardsSpeed: 100
   ropeLeftBehind: {fileID: 0}
+  defaultSphereMaterial: {fileID: 2100000, guid: a5b2d59165e83894fa8c159cc64ddad1, type: 2}
+  beneathSphereMaterial: {fileID: 2100000, guid: cb019fa50f2ce454fa3c9056b4709e94, type: 2}
   objectShotAt: {fileID: 0}
-  inRange: {fileID: 0}
 --- !u!82 &5111010940040262766
 AudioSource:
   m_ObjectHideFlags: 0

@@ -19,11 +19,16 @@ public class GrappleScript : MonoBehaviour
     [Tooltip("Layer player can grapple on.")]
     public LayerMask grappleSurface;
 
-    [Tooltip("Where to shoot grapple from.")]
-    public Transform gunTip;
+    //[Tooltip("Where to shoot grapple from.")]
+    private Transform gunTip;
 
-    [Tooltip("Camera and player.")]
-    public Transform cam, player;
+    public Transform GunTip
+    {
+        get => gunTip;
+    }
+
+    //[Tooltip("Camera and player.")]
+    private Transform cam, player;
 
     private PlayerMovement pm;
 
@@ -84,6 +89,17 @@ public class GrappleScript : MonoBehaviour
 
     private GameObject grappleLocationSphere;
 
+    private MeshRenderer mr;
+
+    [Header("Sphere Materials")]
+    [SerializeField]
+    private Material defaultSphereMaterial;
+
+    [SerializeField]
+    private Material beneathSphereMaterial;
+
+    private GameObject inRange;
+
     public GameObject objectShotAt;
 
     /// <summary>
@@ -91,8 +107,16 @@ public class GrappleScript : MonoBehaviour
     /// </summary>
     public void Start()
     {
+        grappleLocationSphere = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Grapple/Sphere", typeof(GameObject)));
+        mr = grappleLocationSphere.GetComponent<MeshRenderer>();
+
+        cam = Camera.main.transform;
+        player = GameObject.Find("Player").transform;
+        gunTip = GameObject.Find("Tip").transform;
+
         pm = player.GetComponent<PlayerMovement>();
         //lineR = GetComponent<LineRenderer>();
+        inRange = GameObject.Find("Crosshair");
         crossColor = inRange.GetComponent<Image>();
     }
 
@@ -143,8 +167,6 @@ public class GrappleScript : MonoBehaviour
     }*/
 
     #region Grapple Normal
-    public GameObject inRange;
-
     private void GrappleCheck()
     {
         if (!isGrappling)
@@ -159,24 +181,39 @@ public class GrappleScript : MonoBehaviour
     void GrappleWithinRange()
     {
         // Close enough to grapple towards target
-        if (canGrapple)
+        if (canGrapple && !isGrappling)
         {
             inRange.transform.localScale = Vector3.one;
             crossColor.color = Color.green;
 
+            /*
             if (grappleLocationSphere == null)
             {
-                grappleLocationSphere = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Grapple/Sphere", typeof(GameObject)));
+                //grappleLocationSphere = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Grapple/Sphere", typeof(GameObject)));
             }
-            else if (isGrappling && grappleLocationSphere != null)
+            if (isGrappling && grappleLocationSphere != null)
             {
                 Destroy(grappleLocationSphere);
+            }*/
+            if(!grappleLocationSphere.activeInHierarchy)
+            {
+                grappleLocationSphere.SetActive(true);
+            }
+                grappleLocationSphere.transform.position = hit.point;
+                grappleLocationSphere.transform.localScale = Vector3.one * Vector3.Distance(hit.point, cam.transform.position)*(sphereSizeMod/100);
+
+            if (CheckIfBeneath())
+            {
+                mr.material = beneathSphereMaterial;
             }
             else
             {
-                grappleLocationSphere.transform.position = hit.point;
-                grappleLocationSphere.transform.localScale = Vector3.one * Vector3.Distance(hit.point, cam.transform.position)*(sphereSizeMod/100);
+                mr.material = defaultSphereMaterial;
             }
+        }
+        else if (isGrappling)
+        {
+            grappleLocationSphere.SetActive(false);
         }
         // Not close enough
         else
@@ -185,7 +222,9 @@ public class GrappleScript : MonoBehaviour
             {
                 inRange.transform.localScale = Vector3.one / 2;
                 crossColor.color = Color.red;
-                Destroy(grappleLocationSphere);
+
+                grappleLocationSphere.SetActive(false);
+                //Destroy(grappleLocationSphere);
             }
         }
     }
@@ -285,7 +324,7 @@ public class GrappleScript : MonoBehaviour
     {
         if (Time.timeScale != 0)
         {
-            if (canGrapple && hit.point.y < transform.position.y)
+            if (CheckIfBeneath())
             {
 
                 isGrappling = true;
@@ -309,6 +348,11 @@ public class GrappleScript : MonoBehaviour
                 player.GetComponent<Rigidbody>().AddForce((hit.point - transform.position).normalized*Vector3.Distance(hit.point, transform.position)*10);*/
             }
         }
+    }
+
+    private bool CheckIfBeneath()
+    {
+        return canGrapple && hit.point.y < transform.position.y;
     }
     #endregion
 }

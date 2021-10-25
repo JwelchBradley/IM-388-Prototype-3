@@ -53,7 +53,7 @@ public class GrapplingRope : MonoBehaviour
         //if (!joint) return;
         if (!gs.IsGrappling)
         {
-            currentGrapplePosition = gs.gunTip.position;
+            currentGrapplePosition = gs.GunTip.position;
             spring.Reset();
             if(lineR.positionCount > 0)
             {
@@ -73,7 +73,7 @@ public class GrapplingRope : MonoBehaviour
         spring.Update(Time.deltaTime);
 
         var grapplePoint = gs.GrapplePoint;
-        var gunTipPosition = gs.gunTip.position;
+        var gunTipPosition = gs.GunTip.position;
         var up = Quaternion.LookRotation((grapplePoint - gunTipPosition).normalized) * Vector3.up;
 
         currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime*12f);
