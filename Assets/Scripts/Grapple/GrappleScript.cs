@@ -143,18 +143,15 @@ public class GrappleScript : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 StartGrapple();
-                //PlayAudio(grappleStart);
             }
             else if (Input.GetMouseButtonUp(0))
             {
                 StopGrapple();
-                //PlayAudio(grappleEnd);
             }
 
             if (Input.GetMouseButtonDown(1))
             {
                 PullTowards();
-                //PlayAudio(grappleStart);
             }
             else if (Input.GetMouseButtonUp(1))
             {
@@ -253,6 +250,8 @@ public class GrappleScript : MonoBehaviour
                 isGrappling = true;
                 pm.isGrappling = true;
 
+                PlayAudio(grappleStart);
+
                 // Create positions for joint
                 grapplePoint = hit.point;
                 joint = player.gameObject.AddComponent<SpringJoint>();
@@ -335,6 +334,7 @@ public class GrappleScript : MonoBehaviour
     {
         if (canGrapple && !isGrappling)
         {
+            PlayAudio(grappleStart);
             StartCoroutine(StartPull());
         }
     }
