@@ -1471,6 +1471,14 @@ PrefabInstance:
       value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 6701394990120424277, guid: 76d17d6516cc6854599ecbb5b0cd84ed, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6701394990120424277, guid: 76d17d6516cc6854599ecbb5b0cd84ed, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6701394990120424277, guid: 76d17d6516cc6854599ecbb5b0cd84ed, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 1000
       objectReference: {fileID: 0}
@@ -59535,6 +59543,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 337304346038413038, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
+      propertyPath: grappleStart
+      value: 
+      objectReference: {fileID: 8300000, guid: c104e60772f99524aac9728b66820620, type: 3}
     - target: {fileID: 4345530903205053621, guid: 380112fe63815cf4fbc55f9c0211b411, type: 3}
       propertyPath: m_RootOrder
       value: 6
