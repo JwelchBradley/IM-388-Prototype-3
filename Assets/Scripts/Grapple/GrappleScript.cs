@@ -334,7 +334,6 @@ public class GrappleScript : MonoBehaviour
     {
         if (canGrapple && !isGrappling)
         {
-            PlayAudio(grappleStart);
             StartCoroutine(StartPull());
         }
     }
@@ -348,6 +347,7 @@ public class GrappleScript : MonoBehaviour
 
                 isGrappling = true;
                 pm.isGrappling = true;
+                PlayAudio(grappleStart);
 
                 grapplePoint = hit.point;
 
