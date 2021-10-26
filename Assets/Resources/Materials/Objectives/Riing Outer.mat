@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Riing Outer
-  m_Shader: {fileID: -6465566751694194690, guid: 5287ba552d597a748b14015f3266bfae, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 7010ba32fcf60cb4f8baf37b5f1b72df, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
@@ -104,6 +104,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
+    - Color_8e977649533f46f188a23bfbbf3b5d50: {r: 1, g: 1, b: 1, a: 0}
+    - Color_b2bd09a3b1d440b9a86c58acc717e981: {r: 51.37788, g: 36.31421, b: 0, a: 0}
     - _BaseColor: {r: 0.91436565, g: 0.94509804, b: 0.0745098, a: 0.5882353}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0.6792453, g: 0.6541558, b: 0.30437878, a: 1}

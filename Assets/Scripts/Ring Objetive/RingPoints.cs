@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class RingPoints : MonoBehaviour
 {
     MeshRenderer mr;
-    public Material green;
+    //public Material green;
+
+    public ParticleSystem part;
 
     public GameObject doors;
     bool oneTime = false;
@@ -21,10 +23,15 @@ public class RingPoints : MonoBehaviour
                 doors.GetComponent<DoorControl>().currentUnLocks += 1;
             }
 
-            mr = GetComponent<MeshRenderer>();
-            mr.material = green;
+            //mr = GetComponent<MeshRenderer>();
+            //mr.material = green;
 
             oneTime = true;
+
+            Vector3 pos = gameObject.transform.position;
+
+            Instantiate(part, pos, transform.rotation);
+            GameObject.Destroy(gameObject);
 
         }
     }
