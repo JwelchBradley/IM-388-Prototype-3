@@ -134,6 +134,12 @@ public class MenuBehavior : MonoBehaviour
         // Resets game
         Time.timeScale = 1;
         AudioListener.pause = false;
+        
+        if (sceneName.Equals("Main Menu"))
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
 
         loadOp.allowSceneActivation = true;
     }

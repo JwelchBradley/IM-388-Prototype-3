@@ -13,7 +13,8 @@ public class LevelExit : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(0);
+            GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>().LoadScene("Main Menu");
+            //SceneManager.LoadScene(0);
         }
     }
 
