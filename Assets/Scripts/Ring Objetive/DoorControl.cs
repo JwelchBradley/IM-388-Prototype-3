@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DoorControl : MonoBehaviour
 {
@@ -19,10 +20,12 @@ public class DoorControl : MonoBehaviour
     public float doorOpenSpeed;
     bool oneTime = true;
 
+    public Text objective;
+
 
     void Update()
     {
-
+        objective.text = ("Rings: " + currentUnLocks + " / " + unlockAmount);
 
         if(currentUnLocks >= unlockAmount && oneTime)
         {
