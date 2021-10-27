@@ -111,6 +111,12 @@ public class GrappleScript : MonoBehaviour
     [Tooltip("The audio clip played when ending grappling")]
     private AudioClip grappleEnd;
 
+    [Header("Particle")]
+    [SerializeField]
+    [Tooltip("The particles played when grapple gun fires")]
+    private ParticleSystem smokeParticles;
+
+
     /// <summary>
     /// Asign variables
     /// </summary>
@@ -252,6 +258,9 @@ public class GrappleScript : MonoBehaviour
 
                 PlayAudio(grappleStart);
 
+                //Particle system smoke activates
+                smokeParticles.Play();
+
                 // Create positions for joint
                 grapplePoint = hit.point;
                 joint = player.gameObject.AddComponent<SpringJoint>();
@@ -259,6 +268,7 @@ public class GrappleScript : MonoBehaviour
                 joint.connectedAnchor = grapplePoint;
 
                 float distFromPoint = Vector3.Distance(player.position, grapplePoint);
+
 
                 // Joint settings
                 joint.maxDistance = distFromPoint * maxJointDist;
@@ -350,6 +360,10 @@ public class GrappleScript : MonoBehaviour
                 PlayAudio(grappleStart);
 
                 grapplePoint = hit.point;
+
+                //Stop particle system
+                smokeParticles.Stop();
+
 
                 while (Vector3.Distance(hit.point, transform.position)>5)
                 {
