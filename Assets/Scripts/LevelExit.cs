@@ -13,7 +13,7 @@ public class LevelExit : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            //SceneManager.LoadScene();
+            SceneManager.LoadScene(0);
         }
     }
 
