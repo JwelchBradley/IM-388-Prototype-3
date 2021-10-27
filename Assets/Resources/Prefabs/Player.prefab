@@ -308,6 +308,7 @@ MonoBehaviour:
   objectShotAt: {fileID: 0}
   grappleStart: {fileID: 0}
   grappleEnd: {fileID: 0}
+  smokeParticles: {fileID: 0}
 --- !u!1 &2810701359487607132
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,16 +519,16 @@ MonoBehaviour:
   maxWalkVelocity: 20
   jumpForce: 1000
   gravity: -35
-  grappleMaxVelocity: 40
-  forwardGrappleMovementMultiplier: 1.5
-  sidewaysGrappleMovementMultiplier: 1.3
+  grappleMaxVelocity: 30.2
+  forwardGrappleMovementMultiplier: 1.1
+  sidewaysGrappleMovementMultiplier: 1.1
   grappleGravity: -20
   exitingGrappleSpeedTime: 1
-  maxExitGrappleSpeed: 30
+  maxExitGrappleSpeed: 25
   exitGrappleExtraGravityTime: 1
   exitGrappleGravity: -60
-  fowardExitGrappleMovementMultiplier: 1.3
-  sidewaysExitGrappleMovementMulitplier: 1.2
+  fowardExitGrappleMovementMultiplier: 1.1
+  sidewaysExitGrappleMovementMulitplier: 1.1
   isGrappling: 0
   groundCheckDist: 0.5
   groundCheckPos: {fileID: 4345530903079763904}
@@ -671,7 +672,7 @@ MonoBehaviour:
   minJointDist: 0.3
   springJoint: 4
   damperJoint: 2
-  massScaleJoint: 2
+  massScaleJoint: 4.28
   toleranceJoint: 0
   aimAssitMultiplier: 7.5
   sphereSizeMod: 10
@@ -680,8 +681,9 @@ MonoBehaviour:
   defaultSphereMaterial: {fileID: 2100000, guid: a5b2d59165e83894fa8c159cc64ddad1, type: 2}
   beneathSphereMaterial: {fileID: 2100000, guid: cb019fa50f2ce454fa3c9056b4709e94, type: 2}
   objectShotAt: {fileID: 0}
-  grappleStart: {fileID: 8300000, guid: 68a0d1ffcd1e3da4286ab508b9ca098b, type: 3}
+  grappleStart: {fileID: 8300000, guid: c104e60772f99524aac9728b66820620, type: 3}
   grappleEnd: {fileID: 8300000, guid: 4c9473b064e0f2c4a89d580801641835, type: 3}
+  smokeParticles: {fileID: 0}
 --- !u!82 &5111010940040262766
 AudioSource:
   m_ObjectHideFlags: 0
