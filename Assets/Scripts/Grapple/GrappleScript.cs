@@ -362,7 +362,7 @@ public class GrappleScript : MonoBehaviour
                 grapplePoint = hit.point;
 
                 //Stop particle system
-                smokeParticles.Stop();
+                smokeParticles.Play();
 
 
                 while (Vector3.Distance(hit.point, transform.position)>5)
