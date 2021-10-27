@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7607080045368538587}
   - component: {fileID: 7607080045368538580}
   - component: {fileID: 7607080045368538581}
+  - component: {fileID: 3759486609359986338}
+  - component: {fileID: 7808141873167705762}
   m_Layer: 0
   m_Name: Ring Objective
   m_TagString: Untagged
@@ -2997,6 +2999,34 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7607080045368538583}
   m_Mesh: {fileID: 0}
+--- !u!64 &3759486609359986338
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7607080045368538583}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
+--- !u!114 &7808141873167705762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7607080045368538583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7752df7ba1a38d04583adcc2e929e8a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: {fileID: 0}
+  doors: {fileID: 0}
 --- !u!1 &8781229730390347119
 GameObject:
   m_ObjectHideFlags: 0
@@ -3010,7 +3040,6 @@ GameObject:
   - component: {fileID: 5350033251674676240}
   - component: {fileID: 5445169671796350925}
   - component: {fileID: 5637928965978840845}
-  - component: {fileID: 1824565958}
   m_Layer: 0
   m_Name: Pipe
   m_TagString: Untagged
@@ -5195,17 +5224,3 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &1824565958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8781229730390347119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7752df7ba1a38d04583adcc2e929e8a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  green: {fileID: 2100000, guid: 521d1fcc6bd644a42aefd48bbb319e7e, type: 2}
-  doors: {fileID: 0}
