@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class RingPoints : MonoBehaviour
 {
-    MeshRenderer mr;
+    MeshRenderer[] mr;
     //public Material green;
 
     public ParticleSystem part;
@@ -16,9 +16,19 @@ public class RingPoints : MonoBehaviour
     public AudioClip ringSnd;
     public Transform player;
 
+    private AudioSource aud;
+
+    private bool hasTriggered = false;
+
+    private void Awake()
+    {
+        aud = GetComponent<AudioSource>();
+        mr = GetComponentsInChildren<MeshRenderer>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player") && !hasTriggered)
         {
 
             if (!oneTime)
@@ -30,12 +40,18 @@ public class RingPoints : MonoBehaviour
             //mr.material = green;
 
             oneTime = true;
+            hasTriggered = true;
 
             Vector3 pos = gameObject.transform.position;
 
-            AudioSource.PlayClipAtPoint(ringSnd, player.position);
+            aud.PlayOneShot(ringSnd, 1);
+            //AudioSource.PlayClipAtPoint(ringSnd, player.position);
+            foreach(MeshRenderer meshr in mr)
+            {
+                meshr.enabled = false;
+            }
             Instantiate(part, pos, transform.rotation);
-            GameObject.Destroy(gameObject);
+            Destroy(gameObject, 3);
 
         }
     }

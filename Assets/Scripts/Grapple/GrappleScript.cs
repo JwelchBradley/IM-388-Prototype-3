@@ -98,6 +98,11 @@ public class GrappleScript : MonoBehaviour
     [SerializeField]
     private Material beneathSphereMaterial;
 
+    [SerializeField]
+    private Material outOfRangeSphereMaterial;
+
+    private bool outOfRangePoint = false;
+
     private GameObject inRange;
 
     public GameObject objectShotAt;
@@ -190,7 +195,25 @@ public class GrappleScript : MonoBehaviour
 
             if (!canGrapple)
                 canGrapple = Physics.BoxCast(cam.position, Vector3.one * aimAssitMultiplier, cam.forward, out hit, Quaternion.Euler(45, 0, 0), maxDist, grappleSurface);
+
+            if (!canGrapple)
+            {
+                outOfRangePoint = Physics.Raycast(cam.position, cam.forward, out hit, 10000000, grappleSurface);
+                GrappleOutOfRange();
+            }
         }
+    }
+
+    void GrappleOutOfRange()
+    {
+        if (!grappleLocationSphere.activeInHierarchy)
+        {
+            grappleLocationSphere.SetActive(true);
+        }
+
+        grappleLocationSphere.transform.position = hit.point;
+        grappleLocationSphere.transform.localScale = Vector3.one * 60 * (sphereSizeMod / 100);
+        mr.material = outOfRangeSphereMaterial;
     }
 
     void GrappleWithinRange()
@@ -238,7 +261,11 @@ public class GrappleScript : MonoBehaviour
                 inRange.transform.localScale = Vector3.one / 2;
                 crossColor.color = Color.red;
 
-                grappleLocationSphere.SetActive(false);
+                if (!outOfRangePoint)
+                {
+                    grappleLocationSphere.SetActive(false);
+
+                }
                 //Destroy(grappleLocationSphere);
             }
         }
