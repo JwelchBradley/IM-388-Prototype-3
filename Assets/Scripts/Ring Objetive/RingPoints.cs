@@ -13,6 +13,9 @@ public class RingPoints : MonoBehaviour
     public GameObject doors;
     bool oneTime = false;
 
+    public AudioClip ringSnd;
+    public Transform player;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player"))
@@ -30,6 +33,7 @@ public class RingPoints : MonoBehaviour
 
             Vector3 pos = gameObject.transform.position;
 
+            AudioSource.PlayClipAtPoint(ringSnd, player.position);
             Instantiate(part, pos, transform.rotation);
             GameObject.Destroy(gameObject);
 
