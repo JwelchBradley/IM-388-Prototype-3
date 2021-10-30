@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -167,6 +168,7 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     private GameObject sludgeOverlay;
+    private Color inTheSauce = new Color(0.4745098f, 0.5849056f, 0.3228017f, 0.4823529f);
 
     [SerializeField]
     private AudioSource extraAudioSource;
@@ -588,12 +590,19 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator DeathCount(float waitTime)
     {
-        while(inAcid)
+
+        Image sludgeImage = sludgeOverlay.GetComponent<Image>();
+        Color inTheSauce = sludgeImage.color;
+        
+
+        while (inAcid)
         {
             yield return new WaitForFixedUpdate();
             waitTime -= Time.fixedDeltaTime;
+            inTheSauce.a = 1-(waitTime / 3);
+            sludgeImage.color = inTheSauce;
 
-            if(waitTime < 0)
+            if (waitTime < 0)
             {
                 notDead = false;
                 StartCoroutine(Restart());
