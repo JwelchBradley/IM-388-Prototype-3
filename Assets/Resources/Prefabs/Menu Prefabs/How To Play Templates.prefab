@@ -364,9 +364,12 @@ MonoBehaviour:
     <b>Grapple:</b>
     Left Click
 
+    <b>Direct Pull Grapple:</b> Right Click
+
     <b>Aim:</b> Mouse
 
-    <b>Open Pause:</b> - Esc
+    <b>Open
+    Pause:</b> - Esc
 
 '
   m_isRightToLeft: 0
